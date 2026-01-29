@@ -1,0 +1,17 @@
+# Development Dependencies Only
+# Install with: pip install -r requirements-dev.txt
+
+# Testing
+pytest>=8.0.0
+pytest-django>=4.7.0
+pytest-cov>=4.1.0
+
+# Code Quality (minimal)
+black>=24.0.0
+
+# Debugging
+ipython>=8.20.0
+django-debug-toolbar>=4.2.0
+
+# Better shell and utilities
+django-extensions>=3.2.3

@@ -1,0 +1,28 @@
+django
+djangorestframework
+gunicorn
+psycopg2-binary
+dj-database-url
+django-environ
+whitenoise
+
+# AI & Vectors
+pgvector
+langchain
+langchain-openai
+tiktoken
+python-dotenv
+langchain-community
+rank_bm25
+faiss-cpu
+deepeval
+numpy
+
+# Code Parsing
+tree-sitter
+pathspec
+
+
+celery>=5.3.0
+redis>=5.0.0
+django-celery-results>=2.5.0

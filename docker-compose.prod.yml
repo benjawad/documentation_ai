@@ -1,0 +1,78 @@
+services:
+  web:
+    restart: always
+    # Don't expose port directly in production - use Nginx/Load Balancer
+    ports:
+      - "8000:8000"
+    # Use Gunicorn with optimized settings
+    command: >
+      gunicorn config.wsgi:application
+      --bind 0.0.0.0:8000
+      --workers 4
+      --threads 2
+      --timeout 60
+      --max-requests 1000
+      --max-requests-jitter 50
+      --access-logfile -
+      --error-logfile -
+      --log-level info
+    environment:
+      - DEBUG=0
+      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS:-yourdomain.com}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+
+  worker:
+    restart: always
+    environment:
+      - DEBUG=0
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  redis:
+    restart: always
+    # Don't expose Redis port in production
+    ports: []
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  db:
+    restart: always
+    # Don't expose DB port in production
+    ports: []
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    # Automated backups (mount backup volume)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backups:/backups

@@ -1,0 +1,62 @@
+services:
+  # 1. Django Web Server
+  web:
+    build: .
+    container_name: django_ai_analyst
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./src:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
+  # 2. Celery Worker (Background Tasks)
+  worker:
+    build: . # Reuses the same image as 'web'
+    container_name: ai_analyst_worker
+    # Command to start the Celery worker
+    command: celery -A config worker --loglevel=info
+    volumes:
+      - ./src:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+    # Workers don't need ports exposed, they talk via Redis
+
+  # 3. Redis (The Broker)
+  redis:
+    image: redis:7-alpine
+    container_name: ai_analyst_redis
+    # Use conditional startup: require a password only if REDIS_PASSWORD is set in .env
+    env_file:
+      - .env
+    command: sh -c 'if [ -n "${REDIS_PASSWORD}" ]; then redis-server --requirepass "${REDIS_PASSWORD}"; else redis-server; fi'
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+  # 4. Database
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: ai_analyst_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-ai_analyst}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
+  redis_data:
