@@ -1,0 +1,52 @@
+@startuml
+title _visit_node
+
+' -- Styling --
+skinparam sequenceArrowThickness 2
+skinparam participantPadding 20
+skinparam boxPadding 10
+skinparam sequenceGroupBorderColor #666666
+autonumber
+
+' -- Participants --
+participant "Children_Nodes" as ChildrenNodes
+participant "FileSystemNode" as FileSystemNode
+participant "FileSystemVisitor" as FileSystemVisitor
+participant "P" as P
+participant "Path" as Path
+participant "p.name" as pname
+participant "sorted" as sorted
+
+' -- Sequence --
+FileSystemVisitor -> FileSystemNode: __call__(name=..., type=...)
+activate FileSystemNode
+deactivate FileSystemNode
+FileSystemVisitor -> Path: stat()
+activate Path
+deactivate Path
+FileSystemVisitor -> FileSystemNode: __call__(name=..., type=...)
+activate FileSystemNode
+deactivate FileSystemNode
+FileSystemVisitor -> sorted: __call__(..., key=...)
+activate sorted
+deactivate sorted
+FileSystemVisitor -> Path: iterdir()
+activate Path
+deactivate Path
+FileSystemVisitor -> P: is_file()
+activate P
+deactivate P
+FileSystemVisitor -> pname: lower()
+activate pname
+deactivate pname
+loop for entry in entries
+FileSystemVisitor -> FileSystemVisitor: _visit_node(entry, ..., max_depth)
+FileSystemVisitor -> ChildrenNodes: append(child)
+activate ChildrenNodes
+deactivate ChildrenNodes
+FileSystemVisitor -> FileSystemNode: __call__(name=..., type=...)
+activate FileSystemNode
+deactivate FileSystemNode
+end
+
+@enduml

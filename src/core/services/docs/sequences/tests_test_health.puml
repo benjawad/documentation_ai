@@ -1,0 +1,33 @@
+@startuml
+title test_health_check
+
+' -- Styling --
+skinparam sequenceArrowThickness 2
+skinparam participantPadding 20
+skinparam boxPadding 10
+skinparam sequenceGroupBorderColor #666666
+autonumber
+
+' -- Participants --
+boundary "Client" as Client
+participant "Response" as Response
+participant "reverse" as reverse
+
+' -- Sequence --
+Module -> Client: get(...)
+activate Client
+deactivate Client
+Module -> reverse: __call__('health_check')
+activate reverse
+deactivate reverse
+Module -> Response: json()
+activate Response
+deactivate Response
+Module -> Response: json()
+activate Response
+deactivate Response
+Module -> Response: json()
+activate Response
+deactivate Response
+
+@enduml

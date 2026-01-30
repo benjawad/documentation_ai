@@ -1,0 +1,261 @@
+{
+  "name": "",
+  "type": "directory",
+  "path": "/",
+  "size": null,
+  "children": [
+    {
+      "name": "app",
+      "type": "directory",
+      "path": "/app",
+      "size": null,
+      "children": [
+        {
+          "name": "config",
+          "type": "directory",
+          "path": "/app/config",
+          "size": null,
+          "children": [
+            {
+              "name": "__init__.py",
+              "type": "file",
+              "path": "/app/config/__init__.py",
+              "size": 66,
+              "children": null
+            },
+            {
+              "name": "asgi.py",
+              "type": "file",
+              "path": "/app/config/asgi.py",
+              "size": 389,
+              "children": null
+            },
+            {
+              "name": "celery.py",
+              "type": "file",
+              "path": "/app/config/celery.py",
+              "size": 667,
+              "children": null
+            },
+            {
+              "name": "settings.py",
+              "type": "file",
+              "path": "/app/config/settings.py",
+              "size": 5365,
+              "children": null
+            },
+            {
+              "name": "urls.py",
+              "type": "file",
+              "path": "/app/config/urls.py",
+              "size": 1044,
+              "children": null
+            },
+            {
+              "name": "wsgi.py",
+              "type": "file",
+              "path": "/app/config/wsgi.py",
+              "size": 389,
+              "children": null
+            }
+          ]
+        },
+        {
+          "name": "core",
+          "type": "directory",
+          "path": "/app/core",
+          "size": null,
+          "children": [
+            {
+              "name": "llm_factory",
+              "type": "directory",
+              "path": "/app/core/llm_factory",
+              "size": null,
+              "children": [
+                {
+                  "name": "__init__.py",
+                  "type": "file",
+                  "path": "/app/core/llm_factory/__init__.py",
+                  "size": 0,
+                  "children": null
+                },
+                {
+                  "name": "factory.py",
+                  "type": "file",
+                  "path": "/app/core/llm_factory/factory.py",
+                  "size": 0,
+                  "children": null
+                },
+                {
+                  "name": "providers.py",
+                  "type": "file",
+                  "path": "/app/core/llm_factory/providers.py",
+                  "size": 0,
+                  "children": null
+                }
+              ]
+            },
+            {
+              "name": "management",
+              "type": "directory",
+              "path": "/app/core/management",
+              "size": null,
+              "children": [
+                {
+                  "name": "commands",
+                  "type": "directory",
+                  "path": "/app/core/management/commands",
+                  "size": null,
+                  "children": [
+                    {
+                      "name": "__init__.py",
+                      "type": "file",
+                      "path": "/app/core/management/commands/__init__.py",
+                      "size": 0,
+                      "children": null
+                    },
+                    {
+                      "name": "analyze.py",
+                      "type": "file",
+                      "path": "/app/core/management/commands/analyze.py",
+                      "size": 0,
+                      "children": null
+                    }
+                  ]
+                },
+                {
+                  "name": "__init__.py",
+                  "type": "file",
+                  "path": "/app/core/management/__init__.py",
+                  "size": 0,
+                  "children": null
+                }
+              ]
+            },
+            {
+              "name": "services",
+              "type": "directory",
+              "path": "/app/core/services",
+              "size": null,
+              "children": [
+                {
+                  "name": "__init__.py",
+                  "type": "file",
+                  "path": "/app/core/services/__init__.py",
+                  "size": 0,
+                  "children": null
+                },
+                {
+                  "name": "architecture_service.py",
+                  "type": "file",
+                  "path": "/app/core/services/architecture_service.py",
+                  "size": 46358,
+                  "children": null
+                },
+                {
+                  "name": "files.py",
+                  "type": "file",
+                  "path": "/app/core/services/files.py",
+                  "size": 7198,
+                  "children": null
+                },
+                {
+                  "name": "full_project_context.json",
+                  "type": "file",
+                  "path": "/app/core/services/full_project_context.json",
+                  "size": 19049,
+                  "children": null
+                },
+                {
+                  "name": "project_service.py",
+                  "type": "file",
+                  "path": "/app/core/services/project_service.py",
+                  "size": 4031,
+                  "children": null
+                },
+                {
+                  "name": "project_tree.json",
+                  "type": "file",
+                  "path": "/app/core/services/project_tree.json",
+                  "size": 7734,
+                  "children": null
+                },
+                {
+                  "name": "project_tree.txt",
+                  "type": "file",
+                  "path": "/app/core/services/project_tree.txt",
+                  "size": 1331,
+                  "children": null
+                }
+              ]
+            },
+            {
+              "name": "tests",
+              "type": "directory",
+              "path": "/app/core/tests",
+              "size": null,
+              "children": [
+                {
+                  "name": "__init__.py",
+                  "type": "file",
+                  "path": "/app/core/tests/__init__.py",
+                  "size": 0,
+                  "children": null
+                },
+                {
+                  "name": "test_health.py",
+                  "type": "file",
+                  "path": "/app/core/tests/test_health.py",
+                  "size": 411,
+                  "children": null
+                }
+              ]
+            },
+            {
+              "name": "__init__.py",
+              "type": "file",
+              "path": "/app/core/__init__.py",
+              "size": 0,
+              "children": null
+            },
+            {
+              "name": "apps.py",
+              "type": "file",
+              "path": "/app/core/apps.py",
+              "size": 146,
+              "children": null
+            },
+            {
+              "name": "models.py",
+              "type": "file",
+              "path": "/app/core/models.py",
+              "size": 0,
+              "children": null
+            },
+            {
+              "name": "urls.py",
+              "type": "file",
+              "path": "/app/core/urls.py",
+              "size": 136,
+              "children": null
+            },
+            {
+              "name": "views.py",
+              "type": "file",
+              "path": "/app/core/views.py",
+              "size": 2126,
+              "children": null
+            }
+          ]
+        },
+        {
+          "name": "manage.py",
+          "type": "file",
+          "path": "/app/manage.py",
+          "size": 662,
+          "children": null
+        }
+      ]
+    }
+  ]
+}

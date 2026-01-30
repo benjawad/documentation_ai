@@ -1,0 +1,50 @@
+@startuml
+title _enrich_node_with_ast
+
+' -- Styling --
+skinparam sequenceArrowThickness 2
+skinparam participantPadding 20
+skinparam boxPadding 10
+skinparam sequenceGroupBorderColor #666666
+autonumber
+
+' -- Participants --
+participant "ArchitectureVisitor" as ArchitectureVisitor
+participant "F" as F
+participant "Path" as Path
+participant "ProjectAnalyzer" as ProjectAnalyzer
+participant "Visitor" as Visitor
+participant "ast" as ast
+participant "logging" as logging
+participant "open" as open
+
+' -- Sequence --
+loop for child in node
+ProjectAnalyzer -> ProjectAnalyzer: _enrich_node_with_ast(child)
+ProjectAnalyzer -> Path: __call__(node)
+activate Path
+deactivate Path
+ProjectAnalyzer -> open: __call__(file_path, 'r', encoding=...)
+activate open
+deactivate open
+ProjectAnalyzer -> F: read()
+activate F
+deactivate F
+ProjectAnalyzer -> ast: parse(source_code)
+activate ast
+deactivate ast
+ProjectAnalyzer -> ArchitectureVisitor: __call__()
+activate ArchitectureVisitor
+deactivate ArchitectureVisitor
+ProjectAnalyzer -> Visitor: visit(tree)
+activate Visitor
+deactivate Visitor
+ProjectAnalyzer -> logging: info(...)
+activate logging
+deactivate logging
+ProjectAnalyzer -> logging: warning(...)
+activate logging
+deactivate logging
+end
+
+@enduml

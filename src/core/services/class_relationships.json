@@ -1,0 +1,249 @@
+{
+  "ArchitectureVisitor": {
+    "module": "/app/core/services/architecture_service.py",
+    "inherits": [
+      "NodeVisitor"
+    ],
+    "uses": [],
+    "methods": [
+      "__init__",
+      "visit_ClassDef",
+      "visit_FunctionDef",
+      "visit_AnnAssign",
+      "visit_Assign"
+    ],
+    "attributes": [
+      {
+        "name": "class_stack",
+        "type": "list"
+      },
+      {
+        "name": "global_functions",
+        "type": "list"
+      },
+      {
+        "name": "structure",
+        "type": "list"
+      }
+    ],
+    "description": null
+  },
+  "FastTypeEnricher": {
+    "module": "/app/core/services/architecture_service.py",
+    "inherits": [],
+    "uses": [
+      "list[dict]"
+    ],
+    "methods": [
+      "__init__",
+      "enrich",
+      "_apply_patches"
+    ],
+    "attributes": [
+      {
+        "name": "llm",
+        "type": "Unknown"
+      }
+    ],
+    "description": "takes the JSON from the Visitor, finds the \"Unknown\" types, and asks SambaNova to fix them."
+  },
+  "FileSystemNode": {
+    "module": "/app/core/services/files.py",
+    "inherits": [],
+    "uses": [
+      "FileSystemNode",
+      "Optional[int]",
+      "directory"
+    ],
+    "methods": [],
+    "attributes": [
+      {
+        "name": "children",
+        "type": "Optional[List[FileSystemNode]]"
+      },
+      {
+        "name": "name",
+        "type": "str"
+      },
+      {
+        "name": "path",
+        "type": "str"
+      },
+      {
+        "name": "size",
+        "type": "Optional[int]"
+      },
+      {
+        "name": "type",
+        "type": "Literal[file, directory]"
+      }
+    ],
+    "description": null
+  },
+  "FileSystemVisitor": {
+    "module": "/app/core/services/files.py",
+    "inherits": [],
+    "uses": [
+      "FileSystemNode"
+    ],
+    "methods": [
+      "visit",
+      "_visit_node"
+    ],
+    "attributes": [
+      {
+        "name": "IGNORED_DIRS",
+        "type": "Unknown"
+      },
+      {
+        "name": "IGNORED_FILES",
+        "type": "Unknown"
+      },
+      {
+        "name": "VIP_EXTENSIONS",
+        "type": "Unknown"
+      },
+      {
+        "name": "VIP_FILENAMES",
+        "type": "Unknown"
+      }
+    ],
+    "description": "A deterministic visitor for the file system.\nIMPROVED: Implements a \"VIP Pass\" to capture environment context (The Devil's Advocate Fix)."
+  },
+  "ProjectAnalyzer": {
+    "module": "/app/core/services/project_service.py",
+    "inherits": [],
+    "uses": [
+      "Dict[str, Any]",
+      "FileSystemVisitor",
+      "resolve"
+    ],
+    "methods": [
+      "__init__",
+      "analyze",
+      "_enrich_node_with_ast"
+    ],
+    "attributes": [
+      {
+        "name": "fs_visitor",
+        "type": "FileSystemVisitor"
+      },
+      {
+        "name": "root_path",
+        "type": "Unknown.resolve"
+      }
+    ],
+    "description": "Orchestrates the analysis.\n1. Uses FileSystemVisitor to walk the tree and filter noise.\n2. Uses ArchitectureVisitor to parse Python logic found in that tree."
+  },
+  "ClassRelationship": {
+    "module": "/app/core/services/relationship_service.py",
+    "inherits": [],
+    "uses": [
+      "List[Dict]",
+      "List[str]",
+      "Optional[str]",
+      "Set[str]"
+    ],
+    "methods": [],
+    "attributes": [
+      {
+        "name": "attributes",
+        "type": "List[Dict]"
+      },
+      {
+        "name": "description",
+        "type": "Optional[str]"
+      },
+      {
+        "name": "inherits",
+        "type": "Set[str]"
+      },
+      {
+        "name": "methods",
+        "type": "List[str]"
+      },
+      {
+        "name": "module",
+        "type": "str"
+      }
+    ],
+    "description": "Represents relationships for a single class"
+  },
+  "RelationshipExtractor": {
+    "module": "/app/core/services/relationship_service.py",
+    "inherits": [],
+    "uses": [
+      "ClassRelationship",
+      "Dict[str, Dict]",
+      "List[str]",
+      "Optional[str]",
+      "Set[str]"
+    ],
+    "methods": [
+      "__init__",
+      "extract_from_json",
+      "_collect_class_names",
+      "_extract_relationships",
+      "_process_class"
+    ],
+    "attributes": [
+      {
+        "name": "PRIMITIVES",
+        "type": "Unknown"
+      },
+      {
+        "name": "all_class_names",
+        "type": "Set[str]"
+      },
+      {
+        "name": "classes",
+        "type": "Dict[str, ClassRelationship]"
+      }
+    ],
+    "description": "Extracts relationships from your project JSON.\nWorks directly with the output of ProjectAnalyzer."
+  },
+  "EnhancedProjectAnalyzer": {
+    "module": "/app/core/services/relationship_service.py",
+    "inherits": [],
+    "uses": [
+      "ProjectAnalyzer",
+      "RelationshipExtractor"
+    ],
+    "methods": [
+      "__init__",
+      "analyze",
+      "save_outputs",
+      "_generate_summary"
+    ],
+    "attributes": [
+      {
+        "name": "project_analyzer",
+        "type": "ProjectAnalyzer"
+      },
+      {
+        "name": "relationship_extractor",
+        "type": "RelationshipExtractor"
+      }
+    ],
+    "description": "Wrapper that adds relationship analysis to your ProjectAnalyzer.\n\nUsage:\n    analyzer = EnhancedProjectAnalyzer(\"/app\")\n    result = analyzer.analyze()\n    \n    # result now contains:\n    # - 'tree': Original project tree with AST analysis\n    # - 'relationships': Class relationships\n    # - 'mermaid': Mermaid diagram"
+  },
+  "CoreConfig": {
+    "module": "/app/core/apps.py",
+    "inherits": [
+      "AppConfig"
+    ],
+    "uses": [],
+    "methods": [],
+    "attributes": [
+      {
+        "name": "default_auto_field",
+        "type": "Constant"
+      },
+      {
+        "name": "name",
+        "type": "Constant"
+      }
+    ],
+    "description": null
+  }
+}

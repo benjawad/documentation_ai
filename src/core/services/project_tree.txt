@@ -1,0 +1,36 @@
+└── 
+    └── app
+        ├── config
+        │   ├── __init__.py
+        │   ├── asgi.py
+        │   ├── celery.py
+        │   ├── settings.py
+        │   ├── urls.py
+        │   └── wsgi.py
+        ├── core
+        │   ├── llm_factory
+        │   │   ├── __init__.py
+        │   │   ├── factory.py
+        │   │   └── providers.py
+        │   ├── management
+        │   │   ├── commands
+        │   │   │   ├── __init__.py
+        │   │   │   └── analyze.py
+        │   │   └── __init__.py
+        │   ├── services
+        │   │   ├── __init__.py
+        │   │   ├── architecture_service.py
+        │   │   ├── files.py
+        │   │   ├── full_project_context.json
+        │   │   ├── project_service.py
+        │   │   ├── project_tree.json
+        │   │   └── project_tree.txt
+        │   ├── tests
+        │   │   ├── __init__.py
+        │   │   └── test_health.py
+        │   ├── __init__.py
+        │   ├── apps.py
+        │   ├── models.py
+        │   ├── urls.py
+        │   └── views.py
+        └── manage.py

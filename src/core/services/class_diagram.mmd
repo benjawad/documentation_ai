@@ -1,0 +1,43 @@
+classDiagram
+    class ArchitectureVisitor {
+        +__init__()
+        +visit_ClassDef()
+        +visit_FunctionDef()
+    }
+    class FastTypeEnricher {
+        +__init__()
+        +enrich()
+        +_apply_patches()
+    }
+    class FileSystemNode {
+    }
+    class FileSystemVisitor {
+        +visit()
+        +_visit_node()
+    }
+    class ProjectAnalyzer {
+        +__init__()
+        +analyze()
+        +_enrich_node_with_ast()
+    }
+    class ClassRelationship {
+    }
+    class RelationshipExtractor {
+        +__init__()
+        +extract_from_json()
+        +_collect_class_names()
+    }
+    class EnhancedProjectAnalyzer {
+        +__init__()
+        +analyze()
+        +save_outputs()
+    }
+    class CoreConfig {
+    }
+
+    FileSystemNode --> FileSystemNode
+    FileSystemVisitor --> FileSystemNode
+    ProjectAnalyzer --> FileSystemVisitor
+    RelationshipExtractor --> ClassRelationship
+    EnhancedProjectAnalyzer --> RelationshipExtractor
+    EnhancedProjectAnalyzer --> ProjectAnalyzer

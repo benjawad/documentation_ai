@@ -12,19 +12,16 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m venv $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
+# Install requirements into the image (no virtualenv)
 COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir --prefix=/usr/local -r requirements.txt
 
 # Install dev dependencies if in development
 COPY requirements-dev.txt .
 ARG INSTALL_DEV=false
 RUN if [ "$INSTALL_DEV" = "true" ]; then \
-    pip install --no-cache-dir -r requirements-dev.txt; \
+    pip install --no-cache-dir --prefix=/usr/local -r requirements-dev.txt; \
     fi
 
 # Stage 2: Final
@@ -37,8 +34,8 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /opt/venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+# Copy installed Python packages from builder into system prefix
+COPY --from=builder /usr/local /usr/local
 
 # SAFE ENTRYPOINT LOCATION (Fixes "no such file" error)
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh

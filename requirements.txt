@@ -13,6 +13,7 @@ langchain-openai
 tiktoken
 python-dotenv
 langchain-community
+langchain-core
 rank_bm25
 faiss-cpu
 deepeval
