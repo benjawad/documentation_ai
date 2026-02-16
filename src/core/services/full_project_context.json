@@ -154,7 +154,7 @@
               "name": "architecture_service.py",
               "type": "file",
               "path": "/app/core/services/architecture_service.py",
-              "size": 46358,
+              "size": 39956,
               "children": null,
               "analysis": {
                 "classes": [
@@ -315,6 +315,20 @@
               }
             },
             {
+              "name": "architecture_summary.md",
+              "type": "file",
+              "path": "/app/core/services/architecture_summary.md",
+              "size": 2953,
+              "children": null
+            },
+            {
+              "name": "class_relationships.json",
+              "type": "file",
+              "path": "/app/core/services/class_relationships.json",
+              "size": 5634,
+              "children": null
+            },
+            {
               "name": "files.py",
               "type": "file",
               "path": "/app/core/services/files.py",
@@ -432,7 +446,7 @@
               "name": "full_project_context.json",
               "type": "file",
               "path": "/app/core/services/full_project_context.json",
-              "size": 19049,
+              "size": 28805,
               "children": null
             },
             {
@@ -491,14 +505,14 @@
               "name": "project_tree.json",
               "type": "file",
               "path": "/app/core/services/project_tree.json",
-              "size": 7734,
+              "size": 9043,
               "children": null
             },
             {
               "name": "project_tree.txt",
               "type": "file",
               "path": "/app/core/services/project_tree.txt",
-              "size": 1331,
+              "size": 1575,
               "children": null
             },
             {

@@ -1,3 +1,4 @@
+# Django & Web
 django
 djangorestframework
 gunicorn
@@ -6,24 +7,42 @@ dj-database-url
 django-environ
 whitenoise
 
-# AI & Vectors
+# AI & Vectors (OPTIMIZED - removed heavy packages)
 pgvector
 langchain
 langchain-openai
-tiktoken
-python-dotenv
 langchain-community
 langchain-core
+langchain-text-splitters
+langsmith>=0.1.0
+tiktoken
+python-dotenv
 rank_bm25
-faiss-cpu
-deepeval
 numpy
+
+# LlamaIndex (SLIM - only what's needed for OpenAI)
+llama-index-core
+llama-index-llms-openai
+llama-index-embeddings-openai
+llama-index-vector-stores-postgres
+llama-index-vector-stores-redis
 
 # Code Parsing
 tree-sitter
 pathspec
 
-
+# Task Queue
 celery>=5.3.0
 redis>=5.0.0
 django-celery-results>=2.5.0
+
+# Model Context Protocol
+mcp>=0.9.0
+
+# ===========================================
+# REMOVED TO REDUCE IMAGE SIZE (~7GB savings):
+# - sentence-transformers (pulls PyTorch ~2GB)
+# - faiss-cpu (~500MB) - use pgvector instead
+# - deepeval (~500MB) - only needed for testing
+# - llama-index (meta-package, pulls everything)
+# ===========================================

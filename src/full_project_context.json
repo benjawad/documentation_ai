@@ -1,0 +1,2667 @@
+{
+  "name": "app",
+  "type": "directory",
+  "path": "/app",
+  "size": null,
+  "children": [
+    {
+      "name": "config",
+      "type": "directory",
+      "path": "/app/config",
+      "size": null,
+      "children": [
+        {
+          "name": "__init__.py",
+          "type": "file",
+          "path": "/app/config/__init__.py",
+          "size": 66,
+          "children": null
+        },
+        {
+          "name": "asgi.py",
+          "type": "file",
+          "path": "/app/config/asgi.py",
+          "size": 389,
+          "children": null
+        },
+        {
+          "name": "celery.py",
+          "type": "file",
+          "path": "/app/config/celery.py",
+          "size": 667,
+          "children": null,
+          "analysis": {
+            "classes": [],
+            "global_functions": [
+              {
+                "name": "debug_task",
+                "args": [],
+                "returns": null,
+                "description": null
+              }
+            ]
+          }
+        },
+        {
+          "name": "settings.py",
+          "type": "file",
+          "path": "/app/config/settings.py",
+          "size": 5505,
+          "children": null
+        },
+        {
+          "name": "urls.py",
+          "type": "file",
+          "path": "/app/config/urls.py",
+          "size": 1044,
+          "children": null
+        },
+        {
+          "name": "wsgi.py",
+          "type": "file",
+          "path": "/app/config/wsgi.py",
+          "size": 389,
+          "children": null
+        }
+      ]
+    },
+    {
+      "name": "core",
+      "type": "directory",
+      "path": "/app/core",
+      "size": null,
+      "children": [
+        {
+          "name": "llm_factory",
+          "type": "directory",
+          "path": "/app/core/llm_factory",
+          "size": null,
+          "children": [
+            {
+              "name": "__init__.py",
+              "type": "file",
+              "path": "/app/core/llm_factory/__init__.py",
+              "size": 288,
+              "children": null
+            },
+            {
+              "name": "factory.py",
+              "type": "file",
+              "path": "/app/core/llm_factory/factory.py",
+              "size": 4875,
+              "children": null,
+              "analysis": {
+                "classes": [
+                  {
+                    "name": "LLMFactory",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [
+                      {
+                        "name": "get_langchain_llm",
+                        "args": [
+                          "model",
+                          "temperature"
+                        ],
+                        "returns": "ChatOpenAI",
+                        "description": "Create a LangChain ChatOpenAI instance\n\nArgs:\n    model: Model name (e.g., 'gpt-4', 'gpt-3.5-turbo')\n    temperature: Creativity level (0-1)\n    **kwargs: Additional parameters\n    \nReturns:\n    ChatOpenAI instance"
+                      },
+                      {
+                        "name": "get_langchain_embeddings",
+                        "args": [
+                          "model"
+                        ],
+                        "returns": "OpenAIEmbeddings",
+                        "description": "Create a LangChain OpenAI embeddings instance\n\nArgs:\n    model: Embedding model name\n    **kwargs: Additional parameters\n    \nReturns:\n    OpenAIEmbeddings instance"
+                      },
+                      {
+                        "name": "get_llama_index_llm",
+                        "args": [
+                          "model",
+                          "temperature"
+                        ],
+                        "returns": "LlamaOpenAI",
+                        "description": "Create a LlamaIndex OpenAI LLM instance\n\nArgs:\n    model: Model name\n    temperature: Creativity level (0-1)\n    **kwargs: Additional parameters\n    \nReturns:\n    LlamaOpenAI instance"
+                      },
+                      {
+                        "name": "get_llama_index_embeddings",
+                        "args": [
+                          "model"
+                        ],
+                        "returns": "OpenAIEmbedding",
+                        "description": "Create a LlamaIndex OpenAI embeddings instance\n\nArgs:\n    model: Embedding model name\n    **kwargs: Additional parameters\n    \nReturns:\n    OpenAIEmbedding instance"
+                      },
+                      {
+                        "name": "configure_llama_index_settings",
+                        "args": [
+                          "llm_model",
+                          "embed_model",
+                          "chunk_size",
+                          "chunk_overlap"
+                        ],
+                        "returns": null,
+                        "description": "Configure global LlamaIndex settings\n\nArgs:\n    llm_model: LLM model name\n    embed_model: Embedding model name\n    chunk_size: Size of text chunks\n    chunk_overlap: Overlap between chunks"
+                      }
+                    ],
+                    "attributes": [],
+                    "description": "Factory for creating LLM instances"
+                  },
+                  {
+                    "name": "LLMConfig",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [],
+                    "attributes": [
+                      {
+                        "name": "CREATIVE_TEMPERATURE",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "DEFAULT_CHAT_MODEL",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "DEFAULT_CHUNK_OVERLAP",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "DEFAULT_CHUNK_SIZE",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "DEFAULT_EMBEDDING_MODEL",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "DEFAULT_LLM_MODEL",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "DEFAULT_SIMILARITY_THRESHOLD",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "DEFAULT_TEMPERATURE",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "DEFAULT_TOP_K",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "PRECISE_TEMPERATURE",
+                        "type": "Constant"
+                      }
+                    ],
+                    "description": "Configuration constants for LLM services"
+                  }
+                ],
+                "global_functions": []
+              }
+            },
+            {
+              "name": "providers.py",
+              "type": "file",
+              "path": "/app/core/llm_factory/providers.py",
+              "size": 5562,
+              "children": null,
+              "analysis": {
+                "classes": [
+                  {
+                    "name": "VectorStoreProvider",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [
+                      {
+                        "name": "get_postgres_vector_store",
+                        "args": [
+                          "table_name",
+                          "embed_dim",
+                          "schema_name"
+                        ],
+                        "returns": "PGVectorStore",
+                        "description": "Create a LlamaIndex PostgreSQL vector store\n\nArgs:\n    table_name: Name of the table for vectors\n    embed_dim: Dimension of embeddings (1536 for OpenAI)\n    schema_name: PostgreSQL schema name\n    \nReturns:\n    PGVectorStore instance"
+                      },
+                      {
+                        "name": "get_redis_vector_store",
+                        "args": [
+                          "index_name",
+                          "prefix"
+                        ],
+                        "returns": "RedisVectorStore",
+                        "description": "Create a LlamaIndex Redis vector store\n\nArgs:\n    index_name: Name of the Redis index\n    prefix: Prefix for document keys\n    \nReturns:\n    RedisVectorStore instance"
+                      },
+                      {
+                        "name": "get_langchain_postgres_store",
+                        "args": [
+                          "collection_name",
+                          "embeddings"
+                        ],
+                        "returns": "PGVector",
+                        "description": "Create a LangChain PostgreSQL vector store\n\nArgs:\n    collection_name: Name of the collection\n    embeddings: Embeddings instance\n    \nReturns:\n    PGVector instance"
+                      },
+                      {
+                        "name": "get_langchain_redis_store",
+                        "args": [
+                          "index_name",
+                          "embeddings"
+                        ],
+                        "returns": "LangChainRedis",
+                        "description": "Create a LangChain Redis vector store\n\nArgs:\n    index_name: Name of the Redis index\n    embeddings: Embeddings instance\n    \nReturns:\n    Redis instance"
+                      }
+                    ],
+                    "attributes": [],
+                    "description": "Provider for vector store instances"
+                  },
+                  {
+                    "name": "VectorStoreConfig",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [],
+                    "attributes": [
+                      {
+                        "name": "DEFAULT_STORE",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "EMBEDDING_DIMENSION",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "POSTGRES_SCHEMA",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "POSTGRES_TABLE_NAME",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "REDIS_INDEX_NAME",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "REDIS_PREFIX",
+                        "type": "Constant"
+                      }
+                    ],
+                    "description": "Configuration for vector stores"
+                  }
+                ],
+                "global_functions": []
+              }
+            }
+          ]
+        },
+        {
+          "name": "management",
+          "type": "directory",
+          "path": "/app/core/management",
+          "size": null,
+          "children": [
+            {
+              "name": "commands",
+              "type": "directory",
+              "path": "/app/core/management/commands",
+              "size": null,
+              "children": [
+                {
+                  "name": "__init__.py",
+                  "type": "file",
+                  "path": "/app/core/management/commands/__init__.py",
+                  "size": 0,
+                  "children": null
+                },
+                {
+                  "name": "analyze.py",
+                  "type": "file",
+                  "path": "/app/core/management/commands/analyze.py",
+                  "size": 0,
+                  "children": null
+                },
+                {
+                  "name": "index_codebase.py",
+                  "type": "file",
+                  "path": "/app/core/management/commands/index_codebase.py",
+                  "size": 2011,
+                  "children": null,
+                  "analysis": {
+                    "classes": [
+                      {
+                        "name": "Command",
+                        "type": "class",
+                        "bases": [
+                          "BaseCommand"
+                        ],
+                        "methods": [
+                          {
+                            "name": "add_arguments",
+                            "args": [
+                              "parser"
+                            ],
+                            "returns": null,
+                            "description": null
+                          },
+                          {
+                            "name": "handle",
+                            "args": [],
+                            "returns": null,
+                            "description": null
+                          }
+                        ],
+                        "attributes": [
+                          {
+                            "name": "help",
+                            "type": "Constant"
+                          }
+                        ],
+                        "description": null
+                      }
+                    ],
+                    "global_functions": []
+                  }
+                },
+                {
+                  "name": "setup_pgvector.py",
+                  "type": "file",
+                  "path": "/app/core/management/commands/setup_pgvector.py",
+                  "size": 1441,
+                  "children": null,
+                  "analysis": {
+                    "classes": [
+                      {
+                        "name": "Command",
+                        "type": "class",
+                        "bases": [
+                          "BaseCommand"
+                        ],
+                        "methods": [
+                          {
+                            "name": "handle",
+                            "args": [],
+                            "returns": null,
+                            "description": null
+                          }
+                        ],
+                        "attributes": [
+                          {
+                            "name": "help",
+                            "type": "Constant"
+                          }
+                        ],
+                        "description": null
+                      }
+                    ],
+                    "global_functions": []
+                  }
+                }
+              ]
+            },
+            {
+              "name": "__init__.py",
+              "type": "file",
+              "path": "/app/core/management/__init__.py",
+              "size": 0,
+              "children": null
+            }
+          ]
+        },
+        {
+          "name": "services",
+          "type": "directory",
+          "path": "/app/core/services",
+          "size": null,
+          "children": [
+            {
+              "name": "__init__.py",
+              "type": "file",
+              "path": "/app/core/services/__init__.py",
+              "size": 0,
+              "children": null
+            },
+            {
+              "name": "analyze_file.py",
+              "type": "file",
+              "path": "/app/core/services/analyze_file.py",
+              "size": 21302,
+              "children": null,
+              "analysis": {
+                "classes": [
+                  {
+                    "name": "AnalysisError",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [],
+                    "attributes": [
+                      {
+                        "name": "error_type",
+                        "type": "str"
+                      },
+                      {
+                        "name": "file_path",
+                        "type": "str"
+                      },
+                      {
+                        "name": "message",
+                        "type": "str"
+                      }
+                    ],
+                    "description": "Error during analysis"
+                  }
+                ],
+                "global_functions": [
+                  {
+                    "name": "analyze_file",
+                    "args": [
+                      "file_path"
+                    ],
+                    "returns": "dict",
+                    "description": "Analyze a single Python file without full project scan.\n\n**Use when:**\n- User asks about ONE specific file\n- Debugging a single module  \n- Need quick file-level understanding\n- Incremental analysis after file changes\n\n**Token efficiency:** ~300 tokens vs 30,000 for full project\n\nArgs:\n    file_path: Absolute or relative path to .py file\n    \nReturns:\n    {\n        \"success\": bool,\n        \"file_path\": str,\n        \"file_name\": str,\n        \"size\": int,\n        \"classes\": [\n            {\n                \"name\": str,\n                \"type\": \"class\",\n                \"bases\": [str],\n                \"methods\": [{\"name\": str, \"args\": [str], \"returns\": str, \"description\": str}],\n                \"attributes\": [{\"name\": str, \"type\": str}],\n                \"description\": str\n            }\n        ],\n        \"global_functions\": [\n            {\"name\": str, \"args\": [str], \"returns\": str, \"description\": str}\n        ],\n        \"imports\": [str],\n        \"total_classes\": int,\n        \"total_methods\": int,\n        \"total_functions\": int,\n        \"error\": str | None\n    }\n\nExample:\n    >>> analyze_file(\"/app/core/services/chat_service.py\")\n    {\n        \"success\": True,\n        \"file_name\": \"chat_service.py\",\n        \"classes\": [\n            {\n                \"name\": \"ChatbotService\",\n                \"bases\": [],\n                \"methods\": [\"__init__\", \"chat\", \"get_history\"],\n                ...\n            }\n        ],\n        \"total_classes\": 1,\n        \"total_methods\": 8\n    }"
+                  },
+                  {
+                    "name": "get_core_classes",
+                    "args": [
+                      "path",
+                      "min_connections",
+                      "include_metrics"
+                    ],
+                    "returns": "dict",
+                    "description": "Identify most connected classes (architectural hotspots).\n\n**Use when:**\n- \"What are the main classes?\"\n- \"Show me the core architecture\"\n- Planning refactoring\n- Understanding system entry points\n\n**Token efficiency:** ~100 tokens vs 30,000 for manual analysis\n\nArgs:\n    path: Project root path\n    min_connections: Minimum total relationships (inherits + uses)\n    include_metrics: Include detailed connection metrics\n    \nReturns:\n    {\n        \"success\": bool,\n        \"total_classes\": int,\n        \"core_classes\": [\n            {\n                \"name\": str,\n                \"module\": str,\n                \"total_connections\": int,\n                \"inherits_count\": int,\n                \"uses_count\": int,\n                \"used_by_count\": int,  # (if include_metrics)\n                \"description\": str\n            }\n        ],\n        \"threshold\": int,\n        \"error\": str | None\n    }\n\nExample:\n    >>> get_core_classes(\"/app\", min_connections=3)\n    {\n        \"success\": True,\n        \"total_classes\": 47,\n        \"core_classes\": [\n            {\n                \"name\": \"ChatbotService\",\n                \"module\": \"/app/core/services/chat_service.py\",\n                \"total_connections\": 10,\n                \"inherits_count\": 0,\n                \"uses_count\": 10,\n                \"description\": \"Service for handling chatbot conversations\"\n            },\n            {\n                \"name\": \"CodebaseIndexer\",\n                \"module\": \"/app/core/services/indexing_service.py\",\n                \"total_connections\": 7,\n                ...\n            }\n        ],\n        \"threshold\": 3\n    }"
+                  },
+                  {
+                    "name": "search_by_pattern",
+                    "args": [
+                      "path",
+                      "pattern_type",
+                      "include_evidence"
+                    ],
+                    "returns": "dict",
+                    "description": "Find classes matching design patterns.\n\n**Supported patterns:**\n- \"factory\": Classes with create/build/get_* methods\n- \"singleton\": Classes with _instance or get_instance\n- \"repository\": Django models with .objects manager\n- \"service\": Classes ending in 'Service' with business logic\n- \"serializer\": DRF serializers (inherit from Serializer)\n- \"viewset\": DRF viewsets (inherit from ViewSet)\n- \"admin\": Django admin classes (inherit from ModelAdmin)\n- \"visitor\": Classes inheriting from NodeVisitor/Visitor\n- \"strategy\": Multiple classes with same interface\n\n**Use when:**\n- \"Find all Factory classes\"\n- \"Show me repositories\"\n- Understanding architectural patterns\n- Code review / pattern validation\n\nArgs:\n    path: Project root path\n    pattern_type: One of the supported patterns above\n    include_evidence: Include why class matches pattern\n    \nReturns:\n    {\n        \"success\": bool,\n        \"pattern\": str,\n        \"matches\": [\n            {\n                \"name\": str,\n                \"module\": str,\n                \"confidence\": \"high\" | \"medium\" | \"low\",\n                \"evidence\": [str],  # Why it matches (if include_evidence)\n                \"description\": str\n            }\n        ],\n        \"total_matches\": int,\n        \"error\": str | None\n    }\n\nExample:\n    >>> search_by_pattern(\"/app\", \"factory\")\n    {\n        \"success\": True,\n        \"pattern\": \"factory\",\n        \"matches\": [\n            {\n                \"name\": \"LLMFactory\",\n                \"module\": \"/app/core/llm_factory/factory.py\",\n                \"confidence\": \"high\",\n                \"evidence\": [\n                    \"Has get_langchain_llm method\",\n                    \"Has get_llama_index_llm method\",\n                    \"Name ends with 'Factory'\"\n                ]\n            }\n        ],\n        \"total_matches\": 2\n    }"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "architecture_service.py",
+              "type": "file",
+              "path": "/app/core/services/architecture_service.py",
+              "size": 39964,
+              "children": null,
+              "analysis": {
+                "classes": [
+                  {
+                    "name": "ArchitectureVisitor",
+                    "type": "class",
+                    "bases": [
+                      "ast.NodeVisitor"
+                    ],
+                    "methods": [
+                      {
+                        "name": "__init__",
+                        "args": [],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "visit_ClassDef",
+                        "args": [
+                          "node"
+                        ],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "visit_FunctionDef",
+                        "args": [
+                          "node"
+                        ],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "visit_AnnAssign",
+                        "args": [
+                          "node"
+                        ],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "visit_Assign",
+                        "args": [
+                          "node"
+                        ],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "_add_attribute",
+                        "args": [
+                          "name",
+                          "type_str"
+                        ],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "_flatten_targets",
+                        "args": [
+                          "targets"
+                        ],
+                        "returns": "list",
+                        "description": null
+                      },
+                      {
+                        "name": "_is_self_attribute",
+                        "args": [
+                          "node"
+                        ],
+                        "returns": "bool",
+                        "description": null
+                      },
+                      {
+                        "name": "_get_id",
+                        "args": [
+                          "node"
+                        ],
+                        "returns": "str",
+                        "description": null
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "class_stack",
+                        "type": "list"
+                      },
+                      {
+                        "name": "global_functions",
+                        "type": "list"
+                      },
+                      {
+                        "name": "structure",
+                        "type": "list"
+                      }
+                    ],
+                    "description": null
+                  },
+                  {
+                    "name": "FastTypeEnricher",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [
+                      {
+                        "name": "__init__",
+                        "args": [
+                          "llm"
+                        ],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "enrich",
+                        "args": [
+                          "code_context",
+                          "structure"
+                        ],
+                        "returns": "list[dict]",
+                        "description": "Scans structure for missing types and asks Llama 3 to infer them."
+                      },
+                      {
+                        "name": "_apply_patches",
+                        "args": [
+                          "structure",
+                          "updates"
+                        ],
+                        "returns": null,
+                        "description": "Applies the inferred types back into the Visitor's structure.\nComplexity: O(N*M) but N (classes) and M (attributes) are small."
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "llm",
+                        "type": "Unknown"
+                      }
+                    ],
+                    "description": "takes the JSON from the Visitor, finds the \"Unknown\" types, and asks SambaNova to fix them."
+                  },
+                  {
+                    "name": "DeterministicPlantUMLConverter",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [
+                      {
+                        "name": "convert",
+                        "args": [
+                          "structure_json"
+                        ],
+                        "returns": "str",
+                        "description": null
+                      }
+                    ],
+                    "attributes": [],
+                    "description": null
+                  }
+                ],
+                "global_functions": []
+              }
+            },
+            {
+              "name": "architecture_summary.md",
+              "type": "file",
+              "path": "/app/core/services/architecture_summary.md",
+              "size": 2953,
+              "children": null
+            },
+            {
+              "name": "chat_service.py",
+              "type": "file",
+              "path": "/app/core/services/chat_service.py",
+              "size": 8442,
+              "children": null,
+              "analysis": {
+                "classes": [
+                  {
+                    "name": "ChatbotService",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [
+                      {
+                        "name": "__init__",
+                        "args": [
+                          "session_id",
+                          "use_postgres"
+                        ],
+                        "returns": null,
+                        "description": "Initialize the chatbot service\n\nArgs:\n    session_id: UUID of the chat session (can be string or UUID)\n    use_postgres: If True, use PostgreSQL; otherwise use Redis"
+                      },
+                      {
+                        "name": "_create_chain",
+                        "args": [],
+                        "returns": null,
+                        "description": "Create a simple RAG chain using LCEL"
+                      },
+                      {
+                        "name": "format_docs",
+                        "args": [
+                          "docs"
+                        ],
+                        "returns": null,
+                        "description": "Format documents for context"
+                      },
+                      {
+                        "name": "_load_chat_history",
+                        "args": [],
+                        "returns": null,
+                        "description": "Load existing chat history from database into chat history"
+                      },
+                      {
+                        "name": "chat",
+                        "args": [
+                          "message"
+                        ],
+                        "returns": "Dict[str, Any]",
+                        "description": "Send a message and get a response\n\nArgs:\n    message: User message\n    \nReturns:\n    Dictionary with response and sources"
+                      },
+                      {
+                        "name": "get_history",
+                        "args": [],
+                        "returns": "List[Dict[str, Any]]",
+                        "description": "Get chat history for the session\n\nReturns:\n    List of messages"
+                      },
+                      {
+                        "name": "clear_history",
+                        "args": [],
+                        "returns": null,
+                        "description": "Clear chat history"
+                      },
+                      {
+                        "name": "create_session",
+                        "args": [
+                          "title"
+                        ],
+                        "returns": "ChatSession",
+                        "description": "Create a new chat session\n\nArgs:\n    title: Optional session title\n    \nReturns:\n    ChatSession instance"
+                      },
+                      {
+                        "name": "list_sessions",
+                        "args": [],
+                        "returns": "List[Dict[str, Any]]",
+                        "description": "List all chat sessions\n\nReturns:\n    List of session dictionaries"
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "SYSTEM_PROMPT",
+                        "type": "Constant"
+                      },
+                      {
+                        "name": "chain",
+                        "type": "self._create_chain"
+                      },
+                      {
+                        "name": "chat_history",
+                        "type": "ChatMessageHistory"
+                      },
+                      {
+                        "name": "embeddings",
+                        "type": "LLMFactory.get_langchain_embeddings"
+                      },
+                      {
+                        "name": "llm",
+                        "type": "LLMFactory.get_langchain_llm"
+                      },
+                      {
+                        "name": "rag_chain",
+                        "type": "Unknown"
+                      },
+                      {
+                        "name": "retriever",
+                        "type": "self.vector_store.as_retriever"
+                      },
+                      {
+                        "name": "session",
+                        "type": "ChatSession.objects.get_or_create"
+                      },
+                      {
+                        "name": "session_id",
+                        "type": "str"
+                      },
+                      {
+                        "name": "use_postgres",
+                        "type": "bool"
+                      },
+                      {
+                        "name": "vector_store",
+                        "type": "VectorStoreProvider.get_langchain_postgres_store"
+                      }
+                    ],
+                    "description": "Service for handling chatbot conversations with codebase context"
+                  }
+                ],
+                "global_functions": []
+              }
+            },
+            {
+              "name": "class_relationships.json",
+              "type": "file",
+              "path": "/app/core/services/class_relationships.json",
+              "size": 5634,
+              "children": null
+            },
+            {
+              "name": "files.py",
+              "type": "file",
+              "path": "/app/core/services/files.py",
+              "size": 7100,
+              "children": null,
+              "analysis": {
+                "classes": [
+                  {
+                    "name": "FileSystemNode",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [],
+                    "attributes": [
+                      {
+                        "name": "children",
+                        "type": "Optional[List[FileSystemNode]]"
+                      },
+                      {
+                        "name": "name",
+                        "type": "str"
+                      },
+                      {
+                        "name": "path",
+                        "type": "str"
+                      },
+                      {
+                        "name": "size",
+                        "type": "Optional[int]"
+                      },
+                      {
+                        "name": "type",
+                        "type": "Literal[file, directory]"
+                      }
+                    ],
+                    "description": null
+                  },
+                  {
+                    "name": "FileSystemVisitor",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [
+                      {
+                        "name": "visit",
+                        "args": [
+                          "root_path",
+                          "max_depth"
+                        ],
+                        "returns": "dict",
+                        "description": null
+                      },
+                      {
+                        "name": "_visit_node",
+                        "args": [
+                          "path",
+                          "current_depth",
+                          "max_depth"
+                        ],
+                        "returns": "Optional[FileSystemNode]",
+                        "description": null
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "IGNORED_DIRS",
+                        "type": "Unknown"
+                      },
+                      {
+                        "name": "IGNORED_FILES",
+                        "type": "Unknown"
+                      },
+                      {
+                        "name": "VIP_EXTENSIONS",
+                        "type": "Unknown"
+                      },
+                      {
+                        "name": "VIP_FILENAMES",
+                        "type": "Unknown"
+                      }
+                    ],
+                    "description": "A deterministic visitor for the file system.\nIMPROVED: Implements a \"VIP Pass\" to capture environment context (The Devil's Advocate Fix)."
+                  },
+                  {
+                    "name": "TreeFormatter",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [
+                      {
+                        "name": "format",
+                        "args": [
+                          "node_dict"
+                        ],
+                        "returns": "str",
+                        "description": null
+                      },
+                      {
+                        "name": "_render",
+                        "args": [
+                          "node",
+                          "lines",
+                          "prefix",
+                          "is_last"
+                        ],
+                        "returns": null,
+                        "description": null
+                      }
+                    ],
+                    "attributes": [],
+                    "description": null
+                  }
+                ],
+                "global_functions": []
+              }
+            },
+            {
+              "name": "full_project_context.json",
+              "type": "file",
+              "path": "/app/core/services/full_project_context.json",
+              "size": 28805,
+              "children": null
+            },
+            {
+              "name": "indexing_service.py",
+              "type": "file",
+              "path": "/app/core/services/indexing_service.py",
+              "size": 10710,
+              "children": null,
+              "analysis": {
+                "classes": [
+                  {
+                    "name": "CodebaseIndexer",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [
+                      {
+                        "name": "__init__",
+                        "args": [
+                          "use_postgres"
+                        ],
+                        "returns": null,
+                        "description": "Initialize the indexer\n\nArgs:\n    use_postgres: If True, use PostgreSQL; otherwise use Redis"
+                      },
+                      {
+                        "name": "index_codebase",
+                        "args": [
+                          "root_path",
+                          "job_id"
+                        ],
+                        "returns": "Dict[str, Any]",
+                        "description": "Index the entire codebase\n\nArgs:\n    root_path: Root path of the project\n    job_id: Optional indexing job ID for tracking\n    \nReturns:\n    Dictionary with indexing results"
+                      },
+                      {
+                        "name": "_extract_files_from_tree",
+                        "args": [
+                          "tree"
+                        ],
+                        "returns": "List[str]",
+                        "description": "Extract file paths from file tree"
+                      },
+                      {
+                        "name": "traverse",
+                        "args": [
+                          "node"
+                        ],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "_process_file",
+                        "args": [
+                          "file_path"
+                        ],
+                        "returns": "List[LlamaDocument]",
+                        "description": "Process a single file and create documents\n\nArgs:\n    file_path: Path to the file\n    \nReturns:\n    List of LlamaIndex documents"
+                      },
+                      {
+                        "name": "get_index",
+                        "args": [],
+                        "returns": "VectorStoreIndex",
+                        "description": "Get or create the vector index\n\nReturns:\n    VectorStoreIndex instance"
+                      },
+                      {
+                        "name": "search_similar_documents",
+                        "args": [
+                          "query",
+                          "top_k"
+                        ],
+                        "returns": "List[Dict[str, Any]]",
+                        "description": "Search for similar documents\n\nArgs:\n    query: Search query\n    top_k: Number of results to return\n    \nReturns:\n    List of similar documents with metadata"
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "embed_model",
+                        "type": "LLMFactory.get_llama_index_embeddings"
+                      },
+                      {
+                        "name": "node_parser",
+                        "type": "SimpleNodeParser.from_defaults"
+                      },
+                      {
+                        "name": "storage_context",
+                        "type": "StorageContext.from_defaults"
+                      },
+                      {
+                        "name": "use_postgres",
+                        "type": "bool"
+                      },
+                      {
+                        "name": "vector_store",
+                        "type": "VectorStoreProvider.get_postgres_vector_store"
+                      }
+                    ],
+                    "description": "Service for indexing codebase using LlamaIndex"
+                  }
+                ],
+                "global_functions": []
+              }
+            },
+            {
+              "name": "project_service.py",
+              "type": "file",
+              "path": "/app/core/services/project_service.py",
+              "size": 5901,
+              "children": null,
+              "analysis": {
+                "classes": [
+                  {
+                    "name": "ProjectAnalyzer",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [
+                      {
+                        "name": "__init__",
+                        "args": [
+                          "root_path"
+                        ],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "analyze",
+                        "args": [],
+                        "returns": "Dict[str, Any]",
+                        "description": null
+                      },
+                      {
+                        "name": "_enrich_node_with_ast",
+                        "args": [
+                          "node"
+                        ],
+                        "returns": null,
+                        "description": "Recursive function to walk the JSON tree. \nIf it finds a .py file, it runs ArchitectureVisitor and injects the data."
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "fs_visitor",
+                        "type": "FileSystemVisitor"
+                      },
+                      {
+                        "name": "root_path",
+                        "type": "Unknown.resolve"
+                      }
+                    ],
+                    "description": "Orchestrates the analysis.\n1. Uses FileSystemVisitor to walk the tree and filter noise.\n2. Uses ArchitectureVisitor to parse Python logic found in that tree."
+                  }
+                ],
+                "global_functions": [
+                  {
+                    "name": "compute_project_hash",
+                    "args": [
+                      "path"
+                    ],
+                    "returns": "str",
+                    "description": "Compute hash of all .py file modification times.\nWhen ANY file changes, hash changes, cache invalidates."
+                  },
+                  {
+                    "name": "get_cached_project_analysis",
+                    "args": [
+                      "path",
+                      "project_hash"
+                    ],
+                    "returns": "dict",
+                    "description": "Cached project analysis.\nWhen project_hash changes (file modified), cache invalidates."
+                  }
+                ]
+              }
+            },
+            {
+              "name": "project_tree.json",
+              "type": "file",
+              "path": "/app/core/services/project_tree.json",
+              "size": 10465,
+              "children": null
+            },
+            {
+              "name": "project_tree.txt",
+              "type": "file",
+              "path": "/app/core/services/project_tree.txt",
+              "size": 1849,
+              "children": null
+            },
+            {
+              "name": "relationship_service.py",
+              "type": "file",
+              "path": "/app/core/services/relationship_service.py",
+              "size": 16778,
+              "children": null,
+              "analysis": {
+                "classes": [
+                  {
+                    "name": "ClassRelationship",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [],
+                    "attributes": [
+                      {
+                        "name": "attributes",
+                        "type": "List[Dict]"
+                      },
+                      {
+                        "name": "description",
+                        "type": "Optional[str]"
+                      },
+                      {
+                        "name": "inherits",
+                        "type": "Set[str]"
+                      },
+                      {
+                        "name": "methods",
+                        "type": "List[str]"
+                      },
+                      {
+                        "name": "module",
+                        "type": "str"
+                      },
+                      {
+                        "name": "name",
+                        "type": "str"
+                      },
+                      {
+                        "name": "uses",
+                        "type": "Set[str]"
+                      }
+                    ],
+                    "description": "Represents relationships for a single class"
+                  },
+                  {
+                    "name": "RelationshipExtractor",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [
+                      {
+                        "name": "__init__",
+                        "args": [],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "extract_from_json",
+                        "args": [
+                          "project_json"
+                        ],
+                        "returns": "Dict[str, ClassRelationship]",
+                        "description": "Extract relationships from your full_project_context.json\n\nArgs:\n    project_json: The JSON from ProjectAnalyzer.analyze()\n\nReturns:\n    Dict of class_name -> ClassRelationship"
+                      },
+                      {
+                        "name": "_collect_class_names",
+                        "args": [
+                          "node"
+                        ],
+                        "returns": null,
+                        "description": "First pass: Build index of all class names"
+                      },
+                      {
+                        "name": "_extract_relationships",
+                        "args": [
+                          "node",
+                          "current_path"
+                        ],
+                        "returns": null,
+                        "description": "Second pass: Extract relationships"
+                      },
+                      {
+                        "name": "_process_class",
+                        "args": [
+                          "class_info",
+                          "module_path"
+                        ],
+                        "returns": null,
+                        "description": "Process a single class from the JSON"
+                      },
+                      {
+                        "name": "_clean_type",
+                        "args": [
+                          "type_str"
+                        ],
+                        "returns": "Optional[str]",
+                        "description": "Clean type string to extract the core class name.\n\nExamples:\n    \"Optional[User]\" -> \"User\"\n    \"List[Product]\" -> \"Product\"\n    \"ast.NodeVisitor\" -> \"NodeVisitor\"\n    \"Literal[file, directory]\" -> None (ignore)"
+                      },
+                      {
+                        "name": "to_dict",
+                        "args": [
+                          "filter_orphans"
+                        ],
+                        "returns": "Dict[str, Dict]",
+                        "description": "Convert to JSON-serializable dict.\n\nArgs:\n    filter_orphans: Remove classes with no relationships"
+                      },
+                      {
+                        "name": "to_mermaid",
+                        "args": [
+                          "focus_on"
+                        ],
+                        "returns": "str",
+                        "description": "Generate Mermaid class diagram.\n\nArgs:\n    focus_on: List of class names to show (None = show all with relationships)"
+                      },
+                      {
+                        "name": "get_core_classes",
+                        "args": [
+                          "min_connections"
+                        ],
+                        "returns": "List[str]",
+                        "description": "Find core classes (most connected).\n\nArgs:\n    min_connections: Minimum total relationships"
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "PRIMITIVES",
+                        "type": "Unknown"
+                      },
+                      {
+                        "name": "all_class_names",
+                        "type": "Set[str]"
+                      },
+                      {
+                        "name": "classes",
+                        "type": "Dict[str, ClassRelationship]"
+                      }
+                    ],
+                    "description": "Extracts relationships from your project JSON.\nWorks directly with the output of ProjectAnalyzer."
+                  },
+                  {
+                    "name": "EnhancedProjectAnalyzer",
+                    "type": "class",
+                    "bases": [],
+                    "methods": [
+                      {
+                        "name": "__init__",
+                        "args": [
+                          "root_path"
+                        ],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "analyze",
+                        "args": [],
+                        "returns": "Dict",
+                        "description": "Full analysis with relationships.\n\nReturns:\n    {\n        'tree': {...},  # Original tree\n        'relationships': {...},  # Class relationships\n        'mermaid': \"...\",  # Mermaid diagram\n        'core_classes': [...]  # Most connected classes\n    }"
+                      },
+                      {
+                        "name": "save_outputs",
+                        "args": [
+                          "output_dir"
+                        ],
+                        "returns": null,
+                        "description": "Save all outputs to files"
+                      },
+                      {
+                        "name": "_generate_summary",
+                        "args": [
+                          "result"
+                        ],
+                        "returns": "str",
+                        "description": "Generate markdown summary"
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "project_analyzer",
+                        "type": "ProjectAnalyzer"
+                      },
+                      {
+                        "name": "relationship_extractor",
+                        "type": "RelationshipExtractor"
+                      }
+                    ],
+                    "description": "Wrapper that adds relationship analysis to your ProjectAnalyzer.\n\nUsage:\n    analyzer = EnhancedProjectAnalyzer(\"/app\")\n    result = analyzer.analyze()\n    \n    # result now contains:\n    # - 'tree': Original project tree with AST analysis\n    # - 'relationships': Class relationships\n    # - 'mermaid': Mermaid diagram"
+                  }
+                ],
+                "global_functions": [
+                  {
+                    "name": "main",
+                    "args": [],
+                    "returns": null,
+                    "description": "Command line usage"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "small_mcp.py",
+              "type": "file",
+              "path": "/app/core/services/small_mcp.py",
+              "size": 16179,
+              "children": null,
+              "analysis": {
+                "classes": [],
+                "global_functions": [
+                  {
+                    "name": "_validate_path",
+                    "args": [
+                      "path",
+                      "must_be_dir",
+                      "must_be_file"
+                    ],
+                    "returns": "Path",
+                    "description": "Validate and resolve a path."
+                  },
+                  {
+                    "name": "_json_response",
+                    "args": [
+                      "data"
+                    ],
+                    "returns": "list[types.TextContent]",
+                    "description": "Create JSON response."
+                  },
+                  {
+                    "name": "_error_response",
+                    "args": [
+                      "error"
+                    ],
+                    "returns": "list[types.TextContent]",
+                    "description": "Create error response."
+                  },
+                  {
+                    "name": "_tool_scan_file_tree",
+                    "args": [
+                      "path",
+                      "max_depth"
+                    ],
+                    "returns": "dict",
+                    "description": "Wrapper for FileSystemVisitor.visit()"
+                  },
+                  {
+                    "name": "_tool_format_tree_text",
+                    "args": [
+                      "path",
+                      "max_depth"
+                    ],
+                    "returns": "dict",
+                    "description": "Wrapper for TreeFormatter.format()"
+                  },
+                  {
+                    "name": "_tool_analyze_file",
+                    "args": [
+                      "file_path"
+                    ],
+                    "returns": "dict",
+                    "description": "Wrapper for ArchitectureVisitor.visit()"
+                  },
+                  {
+                    "name": "_tool_analyze_project",
+                    "args": [
+                      "path"
+                    ],
+                    "returns": "dict",
+                    "description": "Wrapper for ProjectAnalyzer.analyze()"
+                  },
+                  {
+                    "name": "_tool_analyze_project_enhanced",
+                    "args": [
+                      "path"
+                    ],
+                    "returns": "dict",
+                    "description": "Wrapper for EnhancedProjectAnalyzer.analyze()"
+                  },
+                  {
+                    "name": "_tool_extract_relationships",
+                    "args": [
+                      "path",
+                      "focus_classes"
+                    ],
+                    "returns": "dict",
+                    "description": "Wrapper for RelationshipExtractor operations"
+                  },
+                  {
+                    "name": "_tool_get_core_classes",
+                    "args": [
+                      "path",
+                      "min_connections"
+                    ],
+                    "returns": "dict",
+                    "description": "Wrapper for RelationshipExtractor.get_core_classes()"
+                  },
+                  {
+                    "name": "_tool_generate_plantuml",
+                    "args": [
+                      "path"
+                    ],
+                    "returns": "dict",
+                    "description": "Wrapper for DeterministicPlantUMLConverter.convert()"
+                  },
+                  {
+                    "name": "collect_classes",
+                    "args": [
+                      "node"
+                    ],
+                    "returns": null,
+                    "description": null
+                  },
+                  {
+                    "name": "_tool_save_analysis",
+                    "args": [
+                      "path",
+                      "output_dir"
+                    ],
+                    "returns": "dict",
+                    "description": "Wrapper for EnhancedProjectAnalyzer.save_outputs()"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "tests",
+          "type": "directory",
+          "path": "/app/core/tests",
+          "size": null,
+          "children": [
+            {
+              "name": "__init__.py",
+              "type": "file",
+              "path": "/app/core/tests/__init__.py",
+              "size": 0,
+              "children": null
+            },
+            {
+              "name": "test_chatbot.py",
+              "type": "file",
+              "path": "/app/core/tests/test_chatbot.py",
+              "size": 8904,
+              "children": null,
+              "analysis": {
+                "classes": [
+                  {
+                    "name": "ChatSessionAPITests",
+                    "type": "class",
+                    "bases": [
+                      "TestCase"
+                    ],
+                    "methods": [
+                      {
+                        "name": "setUp",
+                        "args": [],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "test_create_session",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test creating a new chat session"
+                      },
+                      {
+                        "name": "test_list_sessions",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test listing all sessions"
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "client",
+                        "type": "APIClient"
+                      }
+                    ],
+                    "description": "Tests for chat session endpoints"
+                  },
+                  {
+                    "name": "ChatAPITests",
+                    "type": "class",
+                    "bases": [
+                      "TestCase"
+                    ],
+                    "methods": [
+                      {
+                        "name": "setUp",
+                        "args": [],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "test_chat_creates_session_if_not_provided",
+                        "args": [
+                          "mock_service"
+                        ],
+                        "returns": null,
+                        "description": "Test that chat creates a new session if none provided"
+                      },
+                      {
+                        "name": "test_chat_with_existing_session",
+                        "args": [
+                          "mock_service"
+                        ],
+                        "returns": null,
+                        "description": "Test chat with existing session"
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "client",
+                        "type": "APIClient"
+                      }
+                    ],
+                    "description": "Tests for chat message endpoints"
+                  },
+                  {
+                    "name": "IndexingAPITests",
+                    "type": "class",
+                    "bases": [
+                      "TestCase"
+                    ],
+                    "methods": [
+                      {
+                        "name": "setUp",
+                        "args": [],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "test_start_indexing",
+                        "args": [
+                          "mock_indexer"
+                        ],
+                        "returns": null,
+                        "description": "Test starting indexing process"
+                      },
+                      {
+                        "name": "test_async_indexing",
+                        "args": [
+                          "mock_task"
+                        ],
+                        "returns": null,
+                        "description": "Test async indexing with Celery"
+                      },
+                      {
+                        "name": "test_get_indexing_jobs",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test getting list of indexing jobs"
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "client",
+                        "type": "APIClient"
+                      }
+                    ],
+                    "description": "Tests for indexing endpoints"
+                  },
+                  {
+                    "name": "SearchAPITests",
+                    "type": "class",
+                    "bases": [
+                      "TestCase"
+                    ],
+                    "methods": [
+                      {
+                        "name": "setUp",
+                        "args": [],
+                        "returns": null,
+                        "description": null
+                      },
+                      {
+                        "name": "test_search_documents",
+                        "args": [
+                          "mock_indexer"
+                        ],
+                        "returns": null,
+                        "description": "Test searching indexed documents"
+                      },
+                      {
+                        "name": "test_search_requires_query",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test that search requires a query parameter"
+                      }
+                    ],
+                    "attributes": [
+                      {
+                        "name": "client",
+                        "type": "APIClient"
+                      }
+                    ],
+                    "description": "Tests for search endpoints"
+                  },
+                  {
+                    "name": "LLMFactoryTests",
+                    "type": "class",
+                    "bases": [
+                      "TestCase"
+                    ],
+                    "methods": [
+                      {
+                        "name": "test_langchain_llm_creation",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test creating LangChain LLM"
+                      },
+                      {
+                        "name": "test_embeddings_creation",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test creating embeddings"
+                      },
+                      {
+                        "name": "test_missing_api_key_raises_error",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test that missing API key raises error"
+                      }
+                    ],
+                    "attributes": [],
+                    "description": "Tests for LLM Factory"
+                  },
+                  {
+                    "name": "ChatbotServiceTests",
+                    "type": "class",
+                    "bases": [
+                      "TestCase"
+                    ],
+                    "methods": [
+                      {
+                        "name": "test_create_session",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test creating chat session"
+                      },
+                      {
+                        "name": "test_list_sessions",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test listing sessions"
+                      }
+                    ],
+                    "attributes": [],
+                    "description": "Tests for ChatbotService"
+                  },
+                  {
+                    "name": "ModelTests",
+                    "type": "class",
+                    "bases": [
+                      "TestCase"
+                    ],
+                    "methods": [
+                      {
+                        "name": "test_chat_session_creation",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test ChatSession model"
+                      },
+                      {
+                        "name": "test_chat_message_creation",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test ChatMessage model"
+                      },
+                      {
+                        "name": "test_indexing_job_creation",
+                        "args": [],
+                        "returns": null,
+                        "description": "Test IndexingJob model"
+                      }
+                    ],
+                    "attributes": [],
+                    "description": "Tests for Django models"
+                  }
+                ],
+                "global_functions": []
+              }
+            },
+            {
+              "name": "test_health.py",
+              "type": "file",
+              "path": "/app/core/tests/test_health.py",
+              "size": 411,
+              "children": null,
+              "analysis": {
+                "classes": [],
+                "global_functions": [
+                  {
+                    "name": "test_health_check",
+                    "args": [
+                      "client"
+                    ],
+                    "returns": null,
+                    "description": "Test that health check endpoint returns 200"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "__init__.py",
+          "type": "file",
+          "path": "/app/core/__init__.py",
+          "size": 0,
+          "children": null
+        },
+        {
+          "name": "admin.py",
+          "type": "file",
+          "path": "/app/core/admin.py",
+          "size": 2105,
+          "children": null,
+          "analysis": {
+            "classes": [
+              {
+                "name": "ChatSessionAdmin",
+                "type": "class",
+                "bases": [
+                  "admin.ModelAdmin"
+                ],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "list_display",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "list_filter",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "ordering",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "readonly_fields",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "search_fields",
+                    "type": "Unknown"
+                  }
+                ],
+                "description": null
+              },
+              {
+                "name": "ChatMessageAdmin",
+                "type": "class",
+                "bases": [
+                  "admin.ModelAdmin"
+                ],
+                "methods": [
+                  {
+                    "name": "message_preview",
+                    "args": [
+                      "obj"
+                    ],
+                    "returns": null,
+                    "description": null
+                  }
+                ],
+                "attributes": [
+                  {
+                    "name": "list_display",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "list_filter",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "ordering",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "readonly_fields",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "search_fields",
+                    "type": "Unknown"
+                  }
+                ],
+                "description": null
+              },
+              {
+                "name": "DocumentAdmin",
+                "type": "class",
+                "bases": [
+                  "admin.ModelAdmin"
+                ],
+                "methods": [
+                  {
+                    "name": "content_preview",
+                    "args": [
+                      "obj"
+                    ],
+                    "returns": null,
+                    "description": null
+                  }
+                ],
+                "attributes": [
+                  {
+                    "name": "list_display",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "list_filter",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "ordering",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "readonly_fields",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "search_fields",
+                    "type": "Unknown"
+                  }
+                ],
+                "description": null
+              },
+              {
+                "name": "IndexingJobAdmin",
+                "type": "class",
+                "bases": [
+                  "admin.ModelAdmin"
+                ],
+                "methods": [
+                  {
+                    "name": "progress",
+                    "args": [
+                      "obj"
+                    ],
+                    "returns": null,
+                    "description": null
+                  }
+                ],
+                "attributes": [
+                  {
+                    "name": "list_display",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "list_filter",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "ordering",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "readonly_fields",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "search_fields",
+                    "type": "Unknown"
+                  }
+                ],
+                "description": null
+              }
+            ],
+            "global_functions": []
+          }
+        },
+        {
+          "name": "apps.py",
+          "type": "file",
+          "path": "/app/core/apps.py",
+          "size": 146,
+          "children": null,
+          "analysis": {
+            "classes": [
+              {
+                "name": "CoreConfig",
+                "type": "class",
+                "bases": [
+                  "AppConfig"
+                ],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "default_auto_field",
+                    "type": "Constant"
+                  },
+                  {
+                    "name": "name",
+                    "type": "Constant"
+                  }
+                ],
+                "description": null
+              }
+            ],
+            "global_functions": []
+          }
+        },
+        {
+          "name": "models.py",
+          "type": "file",
+          "path": "/app/core/models.py",
+          "size": 3494,
+          "children": null,
+          "analysis": {
+            "classes": [
+              {
+                "name": "Meta",
+                "type": "class",
+                "bases": [],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "db_table",
+                    "type": "Constant"
+                  },
+                  {
+                    "name": "indexes",
+                    "type": "list"
+                  }
+                ],
+                "description": null
+              },
+              {
+                "name": "Document",
+                "type": "class",
+                "bases": [
+                  "models.Model"
+                ],
+                "methods": [
+                  {
+                    "name": "__str__",
+                    "args": [],
+                    "returns": null,
+                    "description": null
+                  }
+                ],
+                "attributes": [
+                  {
+                    "name": "chunk_index",
+                    "type": "models.IntegerField"
+                  },
+                  {
+                    "name": "content",
+                    "type": "models.TextField"
+                  },
+                  {
+                    "name": "created_at",
+                    "type": "models.DateTimeField"
+                  },
+                  {
+                    "name": "embedding",
+                    "type": "VectorField"
+                  },
+                  {
+                    "name": "file_path",
+                    "type": "models.CharField"
+                  },
+                  {
+                    "name": "id",
+                    "type": "models.UUIDField"
+                  },
+                  {
+                    "name": "metadata",
+                    "type": "models.JSONField"
+                  },
+                  {
+                    "name": "updated_at",
+                    "type": "models.DateTimeField"
+                  }
+                ],
+                "description": "Store indexed documents from the codebase"
+              },
+              {
+                "name": "Meta",
+                "type": "class",
+                "bases": [],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "db_table",
+                    "type": "Constant"
+                  },
+                  {
+                    "name": "ordering",
+                    "type": "list"
+                  }
+                ],
+                "description": null
+              },
+              {
+                "name": "ChatSession",
+                "type": "class",
+                "bases": [
+                  "models.Model"
+                ],
+                "methods": [
+                  {
+                    "name": "__str__",
+                    "args": [],
+                    "returns": null,
+                    "description": null
+                  }
+                ],
+                "attributes": [
+                  {
+                    "name": "created_at",
+                    "type": "models.DateTimeField"
+                  },
+                  {
+                    "name": "id",
+                    "type": "models.UUIDField"
+                  },
+                  {
+                    "name": "metadata",
+                    "type": "models.JSONField"
+                  },
+                  {
+                    "name": "title",
+                    "type": "models.CharField"
+                  },
+                  {
+                    "name": "updated_at",
+                    "type": "models.DateTimeField"
+                  }
+                ],
+                "description": "Store chat sessions"
+              },
+              {
+                "name": "Meta",
+                "type": "class",
+                "bases": [],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "db_table",
+                    "type": "Constant"
+                  },
+                  {
+                    "name": "indexes",
+                    "type": "list"
+                  },
+                  {
+                    "name": "ordering",
+                    "type": "list"
+                  }
+                ],
+                "description": null
+              },
+              {
+                "name": "ChatMessage",
+                "type": "class",
+                "bases": [
+                  "models.Model"
+                ],
+                "methods": [
+                  {
+                    "name": "__str__",
+                    "args": [],
+                    "returns": null,
+                    "description": null
+                  }
+                ],
+                "attributes": [
+                  {
+                    "name": "ROLE_CHOICES",
+                    "type": "list"
+                  },
+                  {
+                    "name": "content",
+                    "type": "models.TextField"
+                  },
+                  {
+                    "name": "created_at",
+                    "type": "models.DateTimeField"
+                  },
+                  {
+                    "name": "id",
+                    "type": "models.UUIDField"
+                  },
+                  {
+                    "name": "metadata",
+                    "type": "models.JSONField"
+                  },
+                  {
+                    "name": "role",
+                    "type": "models.CharField"
+                  },
+                  {
+                    "name": "session",
+                    "type": "models.ForeignKey"
+                  },
+                  {
+                    "name": "sources",
+                    "type": "models.JSONField"
+                  }
+                ],
+                "description": "Store individual chat messages"
+              },
+              {
+                "name": "Meta",
+                "type": "class",
+                "bases": [],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "db_table",
+                    "type": "Constant"
+                  },
+                  {
+                    "name": "ordering",
+                    "type": "list"
+                  }
+                ],
+                "description": null
+              },
+              {
+                "name": "IndexingJob",
+                "type": "class",
+                "bases": [
+                  "models.Model"
+                ],
+                "methods": [
+                  {
+                    "name": "__str__",
+                    "args": [],
+                    "returns": null,
+                    "description": null
+                  }
+                ],
+                "attributes": [
+                  {
+                    "name": "STATUS_CHOICES",
+                    "type": "list"
+                  },
+                  {
+                    "name": "completed_at",
+                    "type": "models.DateTimeField"
+                  },
+                  {
+                    "name": "created_at",
+                    "type": "models.DateTimeField"
+                  },
+                  {
+                    "name": "error_message",
+                    "type": "models.TextField"
+                  },
+                  {
+                    "name": "id",
+                    "type": "models.UUIDField"
+                  },
+                  {
+                    "name": "metadata",
+                    "type": "models.JSONField"
+                  },
+                  {
+                    "name": "processed_files",
+                    "type": "models.IntegerField"
+                  },
+                  {
+                    "name": "started_at",
+                    "type": "models.DateTimeField"
+                  },
+                  {
+                    "name": "status",
+                    "type": "models.CharField"
+                  },
+                  {
+                    "name": "total_files",
+                    "type": "models.IntegerField"
+                  }
+                ],
+                "description": "Track indexing jobs"
+              }
+            ],
+            "global_functions": []
+          }
+        },
+        {
+          "name": "serializers.py",
+          "type": "file",
+          "path": "/app/core/serializers.py",
+          "size": 3597,
+          "children": null,
+          "analysis": {
+            "classes": [
+              {
+                "name": "Meta",
+                "type": "class",
+                "bases": [],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "fields",
+                    "type": "list"
+                  },
+                  {
+                    "name": "model",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "read_only_fields",
+                    "type": "list"
+                  }
+                ],
+                "description": null
+              },
+              {
+                "name": "ChatMessageSerializer",
+                "type": "class",
+                "bases": [
+                  "serializers.ModelSerializer"
+                ],
+                "methods": [],
+                "attributes": [],
+                "description": "Serializer for chat messages"
+              },
+              {
+                "name": "Meta",
+                "type": "class",
+                "bases": [],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "fields",
+                    "type": "list"
+                  },
+                  {
+                    "name": "model",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "read_only_fields",
+                    "type": "list"
+                  }
+                ],
+                "description": null
+              },
+              {
+                "name": "ChatSessionSerializer",
+                "type": "class",
+                "bases": [
+                  "serializers.ModelSerializer"
+                ],
+                "methods": [
+                  {
+                    "name": "get_last_message",
+                    "args": [
+                      "obj"
+                    ],
+                    "returns": null,
+                    "description": null
+                  }
+                ],
+                "attributes": [
+                  {
+                    "name": "last_message",
+                    "type": "serializers.SerializerMethodField"
+                  },
+                  {
+                    "name": "message_count",
+                    "type": "serializers.IntegerField"
+                  }
+                ],
+                "description": "Serializer for chat sessions"
+              },
+              {
+                "name": "Meta",
+                "type": "class",
+                "bases": [],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "fields",
+                    "type": "list"
+                  },
+                  {
+                    "name": "model",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "read_only_fields",
+                    "type": "list"
+                  }
+                ],
+                "description": null
+              },
+              {
+                "name": "ChatSessionDetailSerializer",
+                "type": "class",
+                "bases": [
+                  "serializers.ModelSerializer"
+                ],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "messages",
+                    "type": "ChatMessageSerializer"
+                  }
+                ],
+                "description": "Detailed serializer for chat sessions with messages"
+              },
+              {
+                "name": "ChatRequestSerializer",
+                "type": "class",
+                "bases": [
+                  "serializers.Serializer"
+                ],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "message",
+                    "type": "serializers.CharField"
+                  },
+                  {
+                    "name": "session_id",
+                    "type": "serializers.UUIDField"
+                  }
+                ],
+                "description": "Serializer for chat requests"
+              },
+              {
+                "name": "ChatResponseSerializer",
+                "type": "class",
+                "bases": [
+                  "serializers.Serializer"
+                ],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "message",
+                    "type": "serializers.CharField"
+                  },
+                  {
+                    "name": "message_id",
+                    "type": "serializers.UUIDField"
+                  },
+                  {
+                    "name": "session_id",
+                    "type": "serializers.UUIDField"
+                  },
+                  {
+                    "name": "sources",
+                    "type": "serializers.ListField"
+                  }
+                ],
+                "description": "Serializer for chat responses"
+              },
+              {
+                "name": "Meta",
+                "type": "class",
+                "bases": [],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "fields",
+                    "type": "list"
+                  },
+                  {
+                    "name": "model",
+                    "type": "Unknown"
+                  },
+                  {
+                    "name": "read_only_fields",
+                    "type": "list"
+                  }
+                ],
+                "description": null
+              },
+              {
+                "name": "IndexingJobSerializer",
+                "type": "class",
+                "bases": [
+                  "serializers.ModelSerializer"
+                ],
+                "methods": [
+                  {
+                    "name": "get_progress_percentage",
+                    "args": [
+                      "obj"
+                    ],
+                    "returns": null,
+                    "description": null
+                  }
+                ],
+                "attributes": [
+                  {
+                    "name": "progress_percentage",
+                    "type": "serializers.SerializerMethodField"
+                  }
+                ],
+                "description": "Serializer for indexing jobs"
+              },
+              {
+                "name": "IndexingRequestSerializer",
+                "type": "class",
+                "bases": [
+                  "serializers.Serializer"
+                ],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "root_path",
+                    "type": "serializers.CharField"
+                  },
+                  {
+                    "name": "use_postgres",
+                    "type": "serializers.BooleanField"
+                  }
+                ],
+                "description": "Serializer for indexing requests"
+              },
+              {
+                "name": "SearchRequestSerializer",
+                "type": "class",
+                "bases": [
+                  "serializers.Serializer"
+                ],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "query",
+                    "type": "serializers.CharField"
+                  },
+                  {
+                    "name": "top_k",
+                    "type": "serializers.IntegerField"
+                  }
+                ],
+                "description": "Serializer for document search requests"
+              },
+              {
+                "name": "SearchResultSerializer",
+                "type": "class",
+                "bases": [
+                  "serializers.Serializer"
+                ],
+                "methods": [],
+                "attributes": [
+                  {
+                    "name": "metadata",
+                    "type": "serializers.DictField"
+                  },
+                  {
+                    "name": "score",
+                    "type": "serializers.FloatField"
+                  },
+                  {
+                    "name": "text",
+                    "type": "serializers.CharField"
+                  }
+                ],
+                "description": "Serializer for search results"
+              }
+            ],
+            "global_functions": []
+          }
+        },
+        {
+          "name": "tasks.py",
+          "type": "file",
+          "path": "/app/core/tasks.py",
+          "size": 3315,
+          "children": null,
+          "analysis": {
+            "classes": [],
+            "global_functions": [
+              {
+                "name": "index_codebase_task",
+                "args": [
+                  "root_path",
+                  "use_postgres",
+                  "job_id"
+                ],
+                "returns": null,
+                "description": "Async task to index the codebase\n\nArgs:\n    root_path: Root path to index\n    use_postgres: Use PostgreSQL (True) or Redis (False)\n    job_id: Optional job ID for tracking\n    \nReturns:\n    Dictionary with indexing results"
+              },
+              {
+                "name": "cleanup_old_jobs_task",
+                "args": [],
+                "returns": null,
+                "description": "Clean up old indexing jobs (older than 7 days)"
+              },
+              {
+                "name": "reindex_changed_files_task",
+                "args": [
+                  "file_paths",
+                  "use_postgres"
+                ],
+                "returns": null,
+                "description": "Re-index specific files that have changed\n\nArgs:\n    file_paths: List of file paths to re-index\n    use_postgres: Use PostgreSQL or Redis\n    \nReturns:\n    Number of files re-indexed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "urls.py",
+          "type": "file",
+          "path": "/app/core/urls.py",
+          "size": 707,
+          "children": null
+        },
+        {
+          "name": "views.py",
+          "type": "file",
+          "path": "/app/core/views.py",
+          "size": 9400,
+          "children": null,
+          "analysis": {
+            "classes": [
+              {
+                "name": "ChatSessionViewSet",
+                "type": "class",
+                "bases": [
+                  "viewsets.ModelViewSet"
+                ],
+                "methods": [
+                  {
+                    "name": "get_serializer_class",
+                    "args": [],
+                    "returns": null,
+                    "description": null
+                  },
+                  {
+                    "name": "list",
+                    "args": [
+                      "request"
+                    ],
+                    "returns": null,
+                    "description": "List all chat sessions"
+                  },
+                  {
+                    "name": "create",
+                    "args": [
+                      "request"
+                    ],
+                    "returns": null,
+                    "description": "Create a new chat session"
+                  },
+                  {
+                    "name": "clear_history",
+                    "args": [
+                      "request",
+                      "pk"
+                    ],
+                    "returns": null,
+                    "description": "Clear chat history for a session"
+                  }
+                ],
+                "attributes": [
+                  {
+                    "name": "queryset",
+                    "type": "ChatSession.objects.all"
+                  },
+                  {
+                    "name": "serializer_class",
+                    "type": "Unknown"
+                  }
+                ],
+                "description": "ViewSet for managing chat sessions"
+              },
+              {
+                "name": "ChatView",
+                "type": "class",
+                "bases": [
+                  "APIView"
+                ],
+                "methods": [
+                  {
+                    "name": "post",
+                    "args": [
+                      "request"
+                    ],
+                    "returns": null,
+                    "description": "Send a message and get a response"
+                  }
+                ],
+                "attributes": [],
+                "description": "View for handling chat messages"
+              },
+              {
+                "name": "IndexingView",
+                "type": "class",
+                "bases": [
+                  "APIView"
+                ],
+                "methods": [
+                  {
+                    "name": "post",
+                    "args": [
+                      "request"
+                    ],
+                    "returns": null,
+                    "description": "Start indexing the codebase"
+                  },
+                  {
+                    "name": "get",
+                    "args": [
+                      "request"
+                    ],
+                    "returns": null,
+                    "description": "Get indexing job status"
+                  }
+                ],
+                "attributes": [],
+                "description": "View for handling codebase indexing"
+              },
+              {
+                "name": "SearchView",
+                "type": "class",
+                "bases": [
+                  "APIView"
+                ],
+                "methods": [
+                  {
+                    "name": "post",
+                    "args": [
+                      "request"
+                    ],
+                    "returns": null,
+                    "description": "Search for similar documents"
+                  }
+                ],
+                "attributes": [],
+                "description": "View for searching indexed documents"
+              }
+            ],
+            "global_functions": [
+              {
+                "name": "health_check",
+                "args": [
+                  "request"
+                ],
+                "returns": null,
+                "description": "Health check endpoint for monitoring and load balancers.\nReturns 200 OK if all services are healthy."
+              },
+              {
+                "name": "chatbot_ui",
+                "args": [
+                  "request"
+                ],
+                "returns": null,
+                "description": "Serve the chatbot UI interface"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "manage.py",
+      "type": "file",
+      "path": "/app/manage.py",
+      "size": 662,
+      "children": null,
+      "analysis": {
+        "classes": [],
+        "global_functions": [
+          {
+            "name": "main",
+            "args": [],
+            "returns": null,
+            "description": "Run administrative tasks."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -6,6 +6,8 @@ from pathlib import Path
 from dataclasses import asdict
 from typing import Dict, Any, Optional
 
+import hashlib
+from functools import lru_cache
 from architecture_service import ArchitectureVisitor
 from files import FileSystemVisitor
 
@@ -55,7 +57,11 @@ class ProjectAnalyzer:
         elif node['type'] == 'file' and node['name'].endswith('.py'):
             file_path = Path(node['path'])
             try:
-                # Read Code
+                # Read Code with error recovery
+                if not file_path.exists():
+                    logging.warning(f"  ⚠️ File not found: {node['name']}")
+                    return
+                
                 with open(file_path, "r", encoding="utf-8") as f:
                     source_code = f.read()
                 
@@ -73,9 +79,51 @@ class ProjectAnalyzer:
                     }
                     logging.info(f"  ✅ Parsed Logic: {node['name']}")
                     
+            except FileNotFoundError:
+                logging.warning(f"  ⚠️ File not found: {node['name']}")
+            except PermissionError:
+                logging.warning(f"  ⚠️ Permission denied: {node['name']}")
+            except UnicodeDecodeError:
+                logging.warning(f"  ⚠️ Encoding error: {node['name']}")
+            except SyntaxError as e:
+                logging.warning(f"  ⚠️ Syntax error in {node['name']}: {e}")
             except Exception as e:
                 logging.warning(f"  ⚠️ Failed to parse {node['name']}: {e}")
 
+# ==============================================================================
+# CACHING LAYER
+# ==============================================================================
+
+def compute_project_hash(path: str) -> str:
+    """
+    Compute hash of all .py file modification times.
+    When ANY file changes, hash changes, cache invalidates.
+    """
+    py_files = sorted(Path(path).rglob("*.py"))
+    mtime_data = []
+    
+    for py_file in py_files:
+        try:
+            mtime = py_file.stat().st_mtime
+            mtime_data.append(f"{py_file}:{mtime}")
+        except:
+            continue
+    
+    hash_input = "".join(mtime_data).encode()
+    return hashlib.md5(hash_input).hexdigest()
+
+
+@lru_cache(maxsize=10)
+def get_cached_project_analysis(path: str, project_hash: str) -> dict:
+    """
+    Cached project analysis.
+    When project_hash changes (file modified), cache invalidates.
+    """
+    print(f"🔥 CACHE MISS - Analyzing project (this takes 20-30s)...")
+    analyzer = ProjectAnalyzer(path)
+    result = analyzer.analyze()
+    print(f"✅ Analysis complete, cached for future calls")
+    return result
 # ==============================================================================
 # EXECUTION ENTRY POINT
 # ==============================================================================

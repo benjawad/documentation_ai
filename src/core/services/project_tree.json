@@ -41,7 +41,7 @@
               "name": "settings.py",
               "type": "file",
               "path": "/app/config/settings.py",
-              "size": 5365,
+              "size": 5505,
               "children": null
             },
             {
@@ -76,21 +76,21 @@
                   "name": "__init__.py",
                   "type": "file",
                   "path": "/app/core/llm_factory/__init__.py",
-                  "size": 0,
+                  "size": 288,
                   "children": null
                 },
                 {
                   "name": "factory.py",
                   "type": "file",
                   "path": "/app/core/llm_factory/factory.py",
-                  "size": 0,
+                  "size": 4875,
                   "children": null
                 },
                 {
                   "name": "providers.py",
                   "type": "file",
                   "path": "/app/core/llm_factory/providers.py",
-                  "size": 0,
+                  "size": 5562,
                   "children": null
                 }
               ]
@@ -119,6 +119,20 @@
                       "type": "file",
                       "path": "/app/core/management/commands/analyze.py",
                       "size": 0,
+                      "children": null
+                    },
+                    {
+                      "name": "index_codebase.py",
+                      "type": "file",
+                      "path": "/app/core/management/commands/index_codebase.py",
+                      "size": 2011,
+                      "children": null
+                    },
+                    {
+                      "name": "setup_pgvector.py",
+                      "type": "file",
+                      "path": "/app/core/management/commands/setup_pgvector.py",
+                      "size": 1441,
                       "children": null
                     }
                   ]
@@ -149,21 +163,49 @@
                   "name": "architecture_service.py",
                   "type": "file",
                   "path": "/app/core/services/architecture_service.py",
-                  "size": 46358,
+                  "size": 39966,
+                  "children": null
+                },
+                {
+                  "name": "architecture_summary.md",
+                  "type": "file",
+                  "path": "/app/core/services/architecture_summary.md",
+                  "size": 2953,
+                  "children": null
+                },
+                {
+                  "name": "chat_service.py",
+                  "type": "file",
+                  "path": "/app/core/services/chat_service.py",
+                  "size": 8442,
+                  "children": null
+                },
+                {
+                  "name": "class_relationships.json",
+                  "type": "file",
+                  "path": "/app/core/services/class_relationships.json",
+                  "size": 5634,
                   "children": null
                 },
                 {
                   "name": "files.py",
                   "type": "file",
                   "path": "/app/core/services/files.py",
-                  "size": 7198,
+                  "size": 7100,
                   "children": null
                 },
                 {
                   "name": "full_project_context.json",
                   "type": "file",
                   "path": "/app/core/services/full_project_context.json",
-                  "size": 19049,
+                  "size": 28805,
+                  "children": null
+                },
+                {
+                  "name": "indexing_service.py",
+                  "type": "file",
+                  "path": "/app/core/services/indexing_service.py",
+                  "size": 10710,
                   "children": null
                 },
                 {
@@ -177,14 +219,21 @@
                   "name": "project_tree.json",
                   "type": "file",
                   "path": "/app/core/services/project_tree.json",
-                  "size": 7734,
+                  "size": 10464,
                   "children": null
                 },
                 {
                   "name": "project_tree.txt",
                   "type": "file",
                   "path": "/app/core/services/project_tree.txt",
-                  "size": 1331,
+                  "size": 1849,
+                  "children": null
+                },
+                {
+                  "name": "relationship_service.py",
+                  "type": "file",
+                  "path": "/app/core/services/relationship_service.py",
+                  "size": 15923,
                   "children": null
                 }
               ]
@@ -200,6 +249,13 @@
                   "type": "file",
                   "path": "/app/core/tests/__init__.py",
                   "size": 0,
+                  "children": null
+                },
+                {
+                  "name": "test_chatbot.py",
+                  "type": "file",
+                  "path": "/app/core/tests/test_chatbot.py",
+                  "size": 8904,
                   "children": null
                 },
                 {
@@ -219,6 +275,13 @@
               "children": null
             },
             {
+              "name": "admin.py",
+              "type": "file",
+              "path": "/app/core/admin.py",
+              "size": 2105,
+              "children": null
+            },
+            {
               "name": "apps.py",
               "type": "file",
               "path": "/app/core/apps.py",
@@ -229,21 +292,35 @@
               "name": "models.py",
               "type": "file",
               "path": "/app/core/models.py",
-              "size": 0,
+              "size": 3494,
+              "children": null
+            },
+            {
+              "name": "serializers.py",
+              "type": "file",
+              "path": "/app/core/serializers.py",
+              "size": 3597,
+              "children": null
+            },
+            {
+              "name": "tasks.py",
+              "type": "file",
+              "path": "/app/core/tasks.py",
+              "size": 3315,
               "children": null
             },
             {
               "name": "urls.py",
               "type": "file",
               "path": "/app/core/urls.py",
-              "size": 136,
+              "size": 707,
               "children": null
             },
             {
               "name": "views.py",
               "type": "file",
               "path": "/app/core/views.py",
-              "size": 2126,
+              "size": 9400,
               "children": null
             }
           ]

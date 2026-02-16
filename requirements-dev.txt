@@ -15,3 +15,11 @@ django-debug-toolbar>=4.2.0
 
 # Better shell and utilities
 django-extensions>=3.2.3
+
+# ===========================================
+# HEAVY PACKAGES - Only install locally for testing
+# These add ~5-7GB and should NOT be in Docker
+# ===========================================
+# deepeval  # LLM evaluation (~500MB + deps)
+# sentence-transformers  # Local embeddings (~2-3GB, pulls PyTorch)
+# faiss-cpu  # Vector search (~500MB) - use pgvector in production

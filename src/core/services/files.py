@@ -23,12 +23,23 @@ class FileSystemVisitor:
         "__pycache__", "node_modules", ".git", ".vscode", ".idea", 
         "dist", "build", "coverage", ".venv", "venv", "env",
         "proc", "sys", "dev", "run", "var", "tmp", "etc", "boot", "srv", "sbin", "bin", "lib", "lib64", "usr", "mnt", "media", "home", "root", "opt",
-        "staticfiles", "static", "media", "assets", "templates", 'theme', 'fonts', 'css', 'scss', 'sass', 'img', 'images', 'svg', 'migrations'
+        "staticfiles", "static", "media", "assets", "templates", 'theme', 'fonts', 'css', 'scss', 'sass', 'img', 'images', 'svg', 'migrations',
+        # Additional exclusions to reduce token count
+        "vendor", "third_party", "external", "deps", "dependencies",
+        ".cache", ".pytest_cache", ".mypy_cache", ".tox", ".nox",
+        "htmlcov", "docs", "documentation", "site-packages",
+        "eggs", ".eggs", "sdist", "wheels", ".wheel", "pip-wheel-metadata",
+        "__pypackages__", "celerybeat-schedule", ".spyderproject", ".spyproject",
     }
     
     IGNORED_FILES = {
         ".DS_Store", "package-lock.json", "yarn.lock", "pnpm-lock.yaml", 
-        "Thumbs.db", "desktop.ini", "npm-debug.log"
+        "Thumbs.db", "desktop.ini", "npm-debug.log",
+        # Additional exclusions
+        ".coverage", ".env", ".env.local", ".env.production",
+        "poetry.lock", "Pipfile.lock", "composer.lock",
+        ".gitattributes", ".editorconfig", ".prettierrc",
+        "LICENSE", "LICENSE.txt", "LICENSE.md",
     }
 
     # VIP Filenames: Critical Context files
@@ -66,6 +77,14 @@ class FileSystemVisitor:
             return None
         
         if path.is_file():
+            # Skip large files (> 50KB) to reduce token count
+            try:
+                file_size = path.stat().st_size
+                if file_size > 50 * 1024:  # 50KB limit
+                    return None
+            except:
+                return None
+            
             # Logic: Allow the file if it is Python, a VIP file, or a VIP extension
             is_python = path.suffix == '.py'
             is_vip_name = path.name in self.VIP_FILENAMES
@@ -79,7 +98,7 @@ class FileSystemVisitor:
                 name=path.name,
                 type="file",
                 path=str(path),
-                size=path.stat().st_size
+                size=file_size
             )
 
         # 3. Processing directories

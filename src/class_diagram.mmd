@@ -1,0 +1,160 @@
+classDiagram
+    class LLMFactory {
+        +get_langchain_llm()
+        +get_langchain_embeddings()
+        +get_llama_index_llm()
+    }
+    class VectorStoreProvider {
+        +get_postgres_vector_store()
+        +get_redis_vector_store()
+        +get_langchain_postgres_store()
+    }
+    class Command {
+        +handle()
+    }
+    class ArchitectureVisitor {
+        +__init__()
+        +visit_ClassDef()
+        +visit_FunctionDef()
+    }
+    class FastTypeEnricher {
+        +__init__()
+        +enrich()
+        +_apply_patches()
+    }
+    class ChatbotService {
+        +__init__()
+        +_create_chain()
+        +format_docs()
+    }
+    class FileSystemNode {
+    }
+    class FileSystemVisitor {
+        +visit()
+        +_visit_node()
+    }
+    class CodebaseIndexer {
+        +__init__()
+        +index_codebase()
+        +_extract_files_from_tree()
+    }
+    class ProjectAnalyzer {
+        +__init__()
+        +analyze()
+        +_enrich_node_with_ast()
+    }
+    class ClassRelationship {
+    }
+    class RelationshipExtractor {
+        +__init__()
+        +extract_from_json()
+        +_collect_class_names()
+    }
+    class EnhancedProjectAnalyzer {
+        +__init__()
+        +analyze()
+        +save_outputs()
+    }
+    class ChatSessionAPITests {
+        +setUp()
+        +test_create_session()
+        +test_list_sessions()
+    }
+    class ChatAPITests {
+        +setUp()
+        +test_chat_creates_session_if_not_provided()
+        +test_chat_with_existing_session()
+    }
+    class IndexingAPITests {
+        +setUp()
+        +test_start_indexing()
+        +test_async_indexing()
+    }
+    class SearchAPITests {
+        +setUp()
+        +test_search_documents()
+        +test_search_requires_query()
+    }
+    class LLMFactoryTests {
+        +test_langchain_llm_creation()
+        +test_embeddings_creation()
+        +test_missing_api_key_raises_error()
+    }
+    class ChatbotServiceTests {
+        +test_create_session()
+        +test_list_sessions()
+    }
+    class ModelTests {
+        +test_chat_session_creation()
+        +test_chat_message_creation()
+        +test_indexing_job_creation()
+    }
+    class ChatSessionAdmin {
+    }
+    class ChatMessageAdmin {
+        +message_preview()
+    }
+    class DocumentAdmin {
+        +content_preview()
+    }
+    class IndexingJobAdmin {
+        +progress()
+    }
+    class CoreConfig {
+    }
+    class Document {
+        +__str__()
+    }
+    class ChatSession {
+        +__str__()
+    }
+    class ChatMessage {
+        +__str__()
+    }
+    class IndexingJob {
+        +__str__()
+    }
+    class ChatMessageSerializer {
+    }
+    class ChatSessionSerializer {
+        +get_last_message()
+    }
+    class ChatSessionDetailSerializer {
+    }
+    class ChatRequestSerializer {
+    }
+    class ChatResponseSerializer {
+    }
+    class IndexingJobSerializer {
+        +get_progress_percentage()
+    }
+    class IndexingRequestSerializer {
+    }
+    class SearchRequestSerializer {
+    }
+    class SearchResultSerializer {
+    }
+    class ChatSessionViewSet {
+        +get_serializer_class()
+        +list()
+        +create()
+    }
+    class ChatView {
+        +post()
+    }
+    class IndexingView {
+        +post()
+        +get()
+    }
+    class SearchView {
+        +post()
+    }
+
+    ChatbotService --> ChatSession
+    FileSystemNode --> FileSystemNode
+    FileSystemVisitor --> FileSystemNode
+    ProjectAnalyzer --> FileSystemVisitor
+    RelationshipExtractor --> ClassRelationship
+    EnhancedProjectAnalyzer --> RelationshipExtractor
+    EnhancedProjectAnalyzer --> ProjectAnalyzer
+    ChatSessionDetailSerializer --> ChatMessageSerializer

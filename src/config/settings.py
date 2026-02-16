@@ -185,3 +185,8 @@ LOGGING = {
         'level': 'INFO',
     },
 }
+# Django REST Framework Configuration
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_PERMISSION_CLASSES': [],
+}

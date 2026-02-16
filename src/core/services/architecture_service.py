@@ -8,158 +8,6 @@ from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import SystemMessage, HumanMessage
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-# class ArchitectureVisitor(ast.NodeVisitor):
-#     def __init__(self):
-#         self.structure = []
-#         self.class_stack = [] 
-#         self.global_functions = []
-
-#     def visit_ClassDef(self, node):
-#         class_info = {
-#             "name": node.name,
-#             "type": "class",
-#             "bases": [self._get_id(b) for b in node.bases],
-#             "methods": [],
-#             "attributes": {} # <--- KEY FIX 1: Use Dict for deduping
-#         }
-#         self.class_stack.append(class_info)
-#         self.generic_visit(node)
-        
-#         # Post-process: Convert attributes dict back to list for JSON
-#         completed_class = self.class_stack.pop()
-#         # Sort by name for consistent output
-#         completed_class["attributes"] = sorted(
-#             [{"name": k, "type": v} for k, v in completed_class["attributes"].items()],
-#             key=lambda x: x['name']
-#         )
-#         self.structure.append(completed_class)
-
-#     def visit_FunctionDef(self, node):
-#         is_method = len(self.class_stack) > 0
-#         current_scope_vars = {}
-#         args = []
-#         for arg in node.args.args:
-#             if arg.arg == 'self': continue
-#             arg_type = self._get_id(arg.annotation) if arg.annotation else "Unknown"
-#             args.append(arg.arg)
-#             current_scope_vars[arg.arg] = arg_type
-
-#         if is_method:
-#             self.class_stack[-1]["_scope"] = current_scope_vars
-
-#         return_type = self._get_id(node.returns) if node.returns else "Unknown"
-#         method_info = {"name": node.name, "args": args, "returns": return_type}
-        
-#         if is_method:
-#             # Handle @property
-#             if any(isinstance(d, ast.Name) and d.id == 'property' for d in node.decorator_list):
-#                  self._add_attribute(node.name, return_type)
-#             else:
-#                 self.class_stack[-1]["methods"].append(method_info)
-#         else:
-#             self.global_functions.append(method_info)
-            
-#         self.generic_visit(node)
-        
-#         # Clean up scope
-#         if is_method and "_scope" in self.class_stack[-1]:
-#             del self.class_stack[-1]["_scope"]
-
-#     def visit_AnnAssign(self, node):
-#         if not self.class_stack: return
-#         target = node.target
-#         attr_name = None
-        
-#         # 1. Class-Level (version: str = "1.0")
-#         if isinstance(target, ast.Name):
-#             attr_name = target.id
-#         # 2. Instance-Level (self.x: int = 1)
-#         elif self._is_self_attribute(target):
-#             attr_name = target.attr
-
-#         if attr_name:
-#             # Annotation is the "Truth" -> Always overwrite existing entry
-#             self._add_attribute(attr_name, self._get_id(node.annotation))
-
-#     def visit_Assign(self, node):
-#         if not self.class_stack: return
-
-#         # Flatten targets (x, y = 1, 2)
-#         all_targets = self._flatten_targets(node.targets)
-
-#         # Infer value type
-#         inferred_type = "Unknown"
-        
-#         # <--- KEY FIX 3: Check Scope for Constructor Arguments --->
-#         # e.g., self.db = conn 
-#         if isinstance(node.value, ast.Name):
-#             scope = self.class_stack[-1].get("_scope", {})
-#             if node.value.id in scope:
-#                 inferred_type = scope[node.value.id] # inferred_type becomes "PostgresConnection"
-
-#         # Standard Inference Fallback
-#         if inferred_type == "Unknown":
-#             if isinstance(node.value, ast.Call):
-#                 inferred_type = self._get_id(node.value.func)
-#             elif isinstance(node.value, ast.Constant):
-#                  inferred_type = type(node.value).__name__ 
-#             elif isinstance(node.value, ast.List):
-#                 inferred_type = "list"
-#             elif isinstance(node.value, ast.Dict):
-#                 inferred_type = "dict"
-
-#         for target in all_targets:
-#             if self._is_self_attribute(target):
-#                 self._add_attribute(target.attr, inferred_type)
-#             elif isinstance(target, ast.Name):
-#                 if "_scope" not in self.class_stack[-1]: 
-#                      self._add_attribute(target.id, inferred_type)
-
-#     def _add_attribute(self, name, type_str):
-#         """Smart Deduplication"""
-#         existing = self.class_stack[-1]["attributes"].get(name, "Unknown")
-        
-#         # If we have a specific type, overwrite Unknown. 
-#         # If we already have a specific type, keep the first one (usually from hints)
-#         if existing == "Unknown" and type_str != "Unknown":
-#             self.class_stack[-1]["attributes"][name] = type_str
-#         elif name not in self.class_stack[-1]["attributes"]:
-#             self.class_stack[-1]["attributes"][name] = type_str
-
-#     def _flatten_targets(self, targets) -> list:
-#         flat = []
-#         for t in targets:
-#             if isinstance(t, (ast.Tuple, ast.List)):
-#                 for elt in t.elts:
-#                     flat.extend(self._flatten_targets([elt]))
-#             else:
-#                 flat.append(t)
-#         return flat
-
-#     def _is_self_attribute(self, node) -> bool:
-#         return (isinstance(node, ast.Attribute) and 
-#                 isinstance(node.value, ast.Name) and 
-#                 node.value.id == 'self')
-
-#     def _get_id(self, node) -> str:
-#         if node is None: return "None"
-#         if isinstance(node, ast.Name): return node.id
-#         elif isinstance(node, ast.Attribute):
-#             val = self._get_id(node.value)
-#             return f"{val}.{node.attr}" if val else node.attr
-#         elif isinstance(node, ast.Subscript):
-#             container = self._get_id(node.value)
-#             slice_val = self._get_id(node.slice)
-#             return f"{container}[{slice_val}]"
-#         elif isinstance(node, ast.Tuple):
-#             return ", ".join([self._get_id(e) for e in node.elts])
-#         # <--- KEY FIX 4: Handle Lists (for Callable[[int], int]) --->
-#         elif isinstance(node, ast.List):
-#             return ", ".join([self._get_id(e) for e in node.elts])
-#         elif isinstance(node, ast.Constant): return str(node.value)
-#         return "Unknown"
-
-
 
 class ArchitectureVisitor(ast.NodeVisitor):
     def __init__(self):
@@ -1312,50 +1160,50 @@ if TYPE_CHECKING:
 
 
 
-# if __name__ == "__main__":
-#     code = """
-# import os 
-# class MyClass:
-#     def method(self): pass
-
-# def my_global_function(x: int):
-#     pass
-
-# def another_function():
-#     return True
-#             """
-
-#     print("--- DEBUGGING VISITOR ---")
-#     test =  
-#     tree = ast.parse(test)
-#     visitor = ArchitectureVisitor()
-#     visitor.visit(tree)
-
-#     print(f"Global Functions Found: {len(visitor.global_functions)}")
-#     for f in visitor.global_functions:
-#         print(f" - {f['name']}")
-
-#     print("\nStructure Output:")
-#     print(json.dumps(visitor.structure, indent=2))
-
 if __name__ == "__main__":
-    # Path to your project file
-    filepath = "architecture_service.py"  # Replace with your file path
+    code = """
+import os 
+class MyClass:
+    def sum(self , x,y) -> int: 
+        return x + y
 
-    # Read the file content
-    with open(filepath, "r", encoding="utf-8") as f:
-        code = f.read()
+def my_global_function(x: int):
+    pass
 
-    # Parse AST
-    tree = ast.parse(code)
+def another_function():
+    return True
+            """
+
+    print("--- DEBUGGING VISITOR ---")
+    tree = ast.parse(test_1)
     visitor = ArchitectureVisitor()
     visitor.visit(tree)
 
-    # Print global functions
     print(f"Global Functions Found: {len(visitor.global_functions)}")
     for f in visitor.global_functions:
         print(f" - {f['name']}")
 
-    # Print class structure
     print("\nStructure Output:")
     print(json.dumps(visitor.structure, indent=2))
+
+# if __name__ == "__main__":
+#     # Path to your project file
+#     filepath = "architecture_service.py"  # Replace with your file path
+
+#     # Read the file content
+#     with open(filepath, "r", encoding="utf-8") as f:
+#         code = f.read()
+
+#     # Parse AST
+#     tree = ast.parse(code)
+#     visitor = ArchitectureVisitor()
+#     visitor.visit(tree)
+
+#     # Print global functions
+#     print(f"Global Functions Found: {len(visitor.global_functions)}")
+#     for f in visitor.global_functions:
+#         print(f" - {f['name']}")
+
+#     # Print class structure
+#     print("\nStructure Output:")
+#     print(json.dumps(visitor.structure, indent=2))

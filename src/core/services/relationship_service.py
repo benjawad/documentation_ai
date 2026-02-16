@@ -324,27 +324,47 @@ class EnhancedProjectAnalyzer:
         """Save all outputs to files"""
         result = self.analyze()
         output_path = Path(output_dir)
-        output_path.mkdir(parents=True, exist_ok=True)
+        
+        try:
+            output_path.mkdir(parents=True, exist_ok=True)
+        except PermissionError:
+            logging.error(f"❌ Permission denied: Cannot create directory {output_path}")
+            return
+        except Exception as e:
+            logging.error(f"❌ Failed to create directory {output_path}: {e}")
+            return
         
         # Save JSON
-        with open(output_path / "full_project_context.json", "w") as f:
-            json.dump(result['tree'], f, indent=2)
-        logging.info(f"✅ Saved: full_project_context.json")
+        try:
+            with open(output_path / "full_project_context.json", "w") as f:
+                json.dump(result['tree'], f, indent=2)
+            logging.info(f"✅ Saved: full_project_context.json")
+        except Exception as e:
+            logging.error(f"❌ Failed to save full_project_context.json: {e}")
         
-        with open(output_path / "class_relationships.json", "w") as f:
-            json.dump(result['relationships'], f, indent=2)
-        logging.info(f"✅ Saved: class_relationships.json")
+        try:
+            with open(output_path / "class_relationships.json", "w") as f:
+                json.dump(result['relationships'], f, indent=2)
+            logging.info(f"✅ Saved: class_relationships.json")
+        except Exception as e:
+            logging.error(f"❌ Failed to save class_relationships.json: {e}")
         
         # Save Mermaid
-        with open(output_path / "class_diagram.mmd", "w") as f:
-            f.write(result['mermaid'])
-        logging.info(f"✅ Saved: class_diagram.mmd")
+        try:
+            with open(output_path / "class_diagram.mmd", "w") as f:
+                f.write(result['mermaid'])
+            logging.info(f"✅ Saved: class_diagram.mmd")
+        except Exception as e:
+            logging.error(f"❌ Failed to save class_diagram.mmd: {e}")
         
         # Save summary
-        summary = self._generate_summary(result)
-        with open(output_path / "architecture_summary.md", "w") as f:
-            f.write(summary)
-        logging.info(f"✅ Saved: architecture_summary.md")
+        try:
+            summary = self._generate_summary(result)
+            with open(output_path / "architecture_summary.md", "w") as f:
+                f.write(summary)
+            logging.info(f"✅ Saved: architecture_summary.md")
+        except Exception as e:
+            logging.error(f"❌ Failed to save architecture_summary.md: {e}")
         
         logging.info(f"\n🎉 All outputs saved to: {output_path}")
     

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Documentation Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .chat-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 900px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .message.assistant {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            line-height: 1.5;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message.assistant .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .message.system .message-content {
+            background: #fffbea;
+            color: #856404;
+            border: 1px solid #ffd700;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        .sources {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f0f4f8;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .sources-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #667eea;
+        }
+
+        .source-item {
+            padding: 5px;
+            margin: 3px 0;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #667eea;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 12px 18px;
+            background: white;
+            border-radius: 18px;
+            width: fit-content;
+            border: 1px solid #e0e0e0;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        #sessionIdInput {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        #sessionIdInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .message-input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        #messageInput {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            resize: none;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        #messageInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .send-btn:active {
+            transform: translateY(0);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .action-btn {
+            background: #f0f4f8;
+            border: 2px solid #e0e0e0;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        pre {
+            background: #f0f0f0;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>🤖 AI Documentation Assistant</h1>
+            <div class="header-actions">
+                <button class="header-btn" onclick="newSession()">New Session</button>
+                <button class="header-btn" onclick="clearChat()">Clear Chat</button>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message system">
+                <div class="message-content">
+                    👋 Welcome! I'm your AI Documentation Assistant. Start by indexing your codebase, then ask me anything about your project!
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <div class="action-buttons">
+                <button class="action-btn" onclick="indexCodebase()">📚 Index Codebase</button>
+            </div>
+            
+            <div class="input-row">
+                <input type="text" id="sessionIdInput" placeholder="Session ID (auto-generated)" readonly>
+            </div>
+
+            <div class="message-input-row">
+                <textarea 
+                    id="messageInput" 
+                    rows="1" 
+                    placeholder="Ask me about your codebase..."
+                    onkeypress="handleKeyPress(event)"
+                ></textarea>
+                <button class="send-btn" onclick="sendMessage()" id="sendBtn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate UUID for session
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        // Initialize session
+        let sessionId = generateUUID();
+        document.getElementById('sessionIdInput').value = sessionId;
+
+        // Handle Enter key
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // Add message to chat
+        function addMessage(role, content, sources = null) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            let messageHTML = `<div class="message-content">${formatMessage(content)}</div>`;
+            
+            if (sources && sources.length > 0) {
+                messageHTML += '<div class="sources"><div class="sources-title">📄 Sources:</div>';
+                sources.forEach(source => {
+                    messageHTML += `<div class="source-item">${source}</div>`;
+                });
+                messageHTML += '</div>';
+            }
+            
+            messageDiv.innerHTML = messageHTML;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Format message content
+        function formatMessage(text) {
+            // Handle undefined/null text
+            if (!text) {
+                return '';
+            }
+            
+            // Convert to string if not already
+            text = String(text);
+            
+            // Handle code blocks
+            text = text.replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
+            
+            // Handle inline code
+            text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+            
+            // Handle line breaks
+            text = text.replace(/\n/g, '<br>');
+            
+            return text;
+        }
+
+        // Show typing indicator
+        function showTyping() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message assistant';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+            messagesDiv.appendChild(typingDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Hide typing indicator
+        function hideTyping() {
+            const typingDiv = document.getElementById('typingIndicator');
+            if (typingDiv) {
+                typingDiv.remove();
+            }
+        }
+
+        // Send message
+        async function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const message = messageInput.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage('user', message);
+            messageInput.value = '';
+            
+            // Disable input
+            sendBtn.disabled = true;
+            messageInput.disabled = true;
+            
+            // Show typing
+            showTyping();
+            
+            try {
+                const response = await fetch('/api/chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        session_id: sessionId,
+                        message: message
+                    })
+                });
+                
+                const data = await response.json();
+                console.log('Chat response:', data);
+                
+                hideTyping();
+                
+                if (response.ok) {
+                    // API returns 'message' not 'response'
+                    const messageText = data.message || data.response || '';
+                    const sources = data.sources || [];
+                    addMessage('assistant', messageText, sources);
+                } else {
+                    addMessage('system', `❌ Error: ${data.error || 'Failed to get response'}`);
+                }
+            } catch (error) {
+                hideTyping();
+                addMessage('system', `❌ Error: ${error.message}`);
+            } finally {
+                sendBtn.disabled = false;
+                messageInput.disabled = false;
+                messageInput.focus();
+            }
+        }
+
+        // Index codebase
+        async function indexCodebase() {
+            addMessage('system', '🔄 Starting codebase indexing...');
+            
+            try {
+                const response = await fetch('/api/index/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        directory: '/app',
+                        use_postgres: true
+                    })
+                });
+                
+                const data = await response.json();
+                console.log('Index response:', data);
+                
+                if (response.ok) {
+                    const jobId = data.job_id || data.id || 'started';
+                    addMessage('system', `✅ Indexing complete! ${data.message || 'Codebase indexed successfully.'}`);
+                } else {
+                    addMessage('system', `❌ Error: ${data.error || data.detail || JSON.stringify(data) || 'Failed to start indexing'}`);
+                }
+            } catch (error) {
+                addMessage('system', `❌ Error: ${error.message}`);
+            }
+        }
+
+        // New session
+        function newSession() {
+            sessionId = generateUUID();
+            document.getElementById('sessionIdInput').value = sessionId;
+            clearChat();
+            addMessage('system', '🆕 New session started!');
+        }
+
+        // Clear chat
+        function clearChat() {
+            const messagesDiv = document.getElementById('chatMessages');
+            messagesDiv.innerHTML = `
+                <div class="message system">
+                    <div class="message-content">
+                        👋 Welcome! I'm your AI Documentation Assistant. Start by indexing your codebase, then ask me anything about your project!
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

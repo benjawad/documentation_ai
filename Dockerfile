@@ -1,45 +1,43 @@
 # Stage 1: Builder
-FROM python:3.13-slim-bookworm as builder
+FROM python:3.11-slim-bookworm as builder
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
     gcc \
     git \
-    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install requirements into the image (no virtualenv)
+# Install Python packages directly (no venv needed in Docker)
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir --prefix=/usr/local -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip wheel && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Install dev dependencies if in development
-COPY requirements-dev.txt .
-ARG INSTALL_DEV=false
-RUN if [ "$INSTALL_DEV" = "true" ]; then \
-    pip install --no-cache-dir --prefix=/usr/local -r requirements-dev.txt; \
-    fi
+# Stage 2: Final (minimal runtime)
+FROM python:3.11-slim-bookworm
 
-# Stage 2: Final
-FROM python:3.13-slim-bookworm
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+    netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
-# Copy installed Python packages from builder into system prefix
-COPY --from=builder /usr/local /usr/local
+# Copy installed packages from builder (only site-packages, not entire /usr/local)
+COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
 
 # SAFE ENTRYPOINT LOCATION (Fixes "no such file" error)
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY mcp_entrypoint.sh /usr/local/bin/mcp_entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh && chmod +x /usr/local/bin/mcp_entrypoint.sh
 
 WORKDIR /app
 # Create staticfiles directory with correct permissions

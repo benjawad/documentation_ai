@@ -29,6 +29,21 @@ services:
       - redis
     # Workers don't need ports exposed, they talk via Redis
 
+  # 2.5. MCP Server (Model Context Protocol)
+  mcp:
+    build: .
+    container_name: ai_analyst_mcp
+    command: tail -f /dev/null
+    volumes:
+      - ./src:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+    # MCP server will be started on-demand by Claude Desktop via docker exec
+
   # 3. Redis (The Broker)
   redis:
     image: redis:7-alpine
@@ -57,6 +72,23 @@ services:
     ports:
       - "5432:5432"
 
+  # 5. pgAdmin (Database GUI)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: ai_analyst_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+
 volumes:
   postgres_data:
   redis_data:
+  pgadmin_data:
